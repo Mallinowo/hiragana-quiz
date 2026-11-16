@@ -4,7 +4,7 @@ Quiz do nauki hiragany: 46 podstawowych znaków, dakuten i handakuten, tryb loso
 
 ## Instalacja na telefonie
 - **Android (Chrome):** otwórz stronę → menu ⋮ → „Zainstaluj aplikację”.
-- **iPhone (Safari):** otwórz stronę → Udostępnij → „Dodaj do ekranu początkowego”.
+- **iPhone (Safari):** otwórz stronę → Udostępnij → „Do ekranu głównego”.
 
 ## Hosting
 Statyczne pliki, bez builda. Wystarczy GitHub Pages / Netlify / Vercel (wymagany HTTPS, żeby działał tryb offline).
