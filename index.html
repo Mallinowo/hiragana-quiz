@@ -6,6 +6,8 @@
 <meta name="theme-color" content="#f3eee3">
 <meta name="description" content="Quiz z hiragany: 46 znaków, dakuten, tryb treningowy i tablica. Działa offline.">
 <link rel="manifest" href="manifest.json">
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}var _c=null;try{_c=localStorage.getItem("hq-consent")}catch(e){}gtag("consent","default",{ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",analytics_storage:_c==="yes"?"granted":"denied"});gtag("js",new Date());gtag("config","G-72LYLPWTR1");</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-72LYLPWTR1"></script>
 <link rel="icon" href="favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -197,6 +199,11 @@ body{background:var(--bg);color:var(--ink)}
 .sheet li{counter-increment:s;display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);font-size:15px}
 .sheet li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center}
 .sheet b{font-weight:700}
+.cc{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:456px;margin:0 auto;background:var(--surf2);border:1px solid var(--line);border-radius:18px;padding:16px;z-index:30;box-shadow:0 12px 40px -12px rgba(60,40,20,.35);animation:up .35s var(--ease) both}
+.cc p{margin:0 0 12px;font-size:13.5px;line-height:1.45;color:var(--mute)}
+.cc div{display:flex;gap:8px}
+.cc button{flex:1;height:44px;border-radius:12px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid var(--line);background:transparent;color:var(--ink)}
+.cc button.y{background:var(--acc);border-color:var(--acc);color:#fff}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -225,6 +232,7 @@ function setLang(l){lang=l;try{localStorage.setItem("hq-lang",l)}catch(e){}apply
 const SND_ON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>',SND_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 6 6M22 9l-6 6"/></svg>';
 let sndOn=true;try{sndOn=localStorage.getItem("hq-snd")!=="0"}catch(e){}
 let actx=null;
+function track(n,p){try{if(window.gtag)gtag("event",n,p||{})}catch(e){}}
 function sfx(kind){
   if(!sndOn)return;
   try{
@@ -244,7 +252,7 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(M
 const getPool=()=>mode==="base"?BASE:mode==="dak"?DAK:BASE.concat(DAK);
 function setWm(c){wm.textContent=c;wm.style.animation="none";void wm.offsetWidth;wm.style.animation=""}
 function topBar(){return`<div class="top"><div class="lft"><button class="back" id="back" title="${T("back")}" aria-label="${T("back")}">‹</button><div class="logo"><i></i><span>ひらがな</span></div></div><div class="pills"><div class="pill" id="sc">${T("score")} <b>${score}</b></div><div class="pill ${streak>=3?"hot":""}" id="st">${T("streak")} <b>×${streak}</b></div><button class="pill" data-t="1">${T("chart")}</button></div></div>`}
-function start(){pool=getPool();queue=order==="seq"?pool.slice():shuffle(pool);idx=0;score=0;streak=0;best=0;wrong=[];render()}
+function start(){track("quiz_start",{mode,order,lang});pool=getPool();queue=order==="seq"?pool.slice():shuffle(pool);idx=0;score=0;streak=0;best=0;wrong=[];render()}
 function render(){
   clearTimeout(timer);
   if(idx>=queue.length)return end();
@@ -295,7 +303,7 @@ function end(){
   ${wrong.length?`<div class="miss">${wrong.map(w=>`<span><b class="kf">${w[0]}</b>${w[1]}</span>`).join("")}</div>`:`<p style="margin-top:12px">${T("flawless")}</p>`}
   <div class="setup chips a" style="flex-direction:column;gap:0;margin-top:22px">${modeChips()}</div></div>
   <div class="foot2"><button class="btn" id="again">${T("again")}</button><button class="link" id="menu">${T("menu")}</button></div>`;
-  sfx("end");
+  sfx("end");track("quiz_finish",{score,total:queue.length,pct,mode,order});
   const bg=document.getElementById("big"),fg=document.getElementById("fg"),t0=performance.now(),dur=1100;
   (function tick(n){const k=Math.min(1,Math.max(0,(n-t0-150)/dur)),e=1-Math.pow(1-k,3);bg.textContent=Math.round(score*e);fg.style.strokeDashoffset=100-pct*e;if(k<1)requestAnimationFrame(tick)})(t0);
   bindModes();document.getElementById("again").onclick=start;document.getElementById("menu").onclick=intro;
@@ -330,12 +338,21 @@ const sheet=document.getElementById("sheet");
 function closeSheet(){sheet.classList.remove("on")}
 sheet.addEventListener("click",e=>{if(e.target===sheet||e.target.closest("#sheetok"))closeSheet()});
 function install(){
+  track("install_click",{platform:isIOS?"ios":isMobile?"android":"desktop",prompt:!!deferredPrompt});
   if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.finally(()=>{deferredPrompt=null;updInst()});return}
   const k=isIOS?"ios":"and";
   document.getElementById("sheetin").innerHTML=`<h3>${T(k+"T")}</h3><p>${T(k+"P")}</p><ol>${T(k).map(x=>`<li><span>${x}</span></li>`).join("")}</ol><button class="btn" id="sheetok">${T("ok")}</button>`;
   sheet.classList.add("on");
 }
-applyLang();intro();
+function consentBar(){
+  let c=null;try{c=localStorage.getItem("hq-consent")}catch(e){}
+  if(c)return;
+  const pl=lang==="pl",d=document.createElement("div");d.className="cc";
+  d.innerHTML=`<p>${pl?"Używamy Google Analytics (pliki cookie), żeby wiedzieć, ile osób korzysta z apki. Bez reklam i bez sprzedawania danych.":"We use Google Analytics (cookies) to see how many people use the app. No ads, no selling data."}</p><div><button data-c="no">${pl?"Odrzuć":"Decline"}</button><button class="y" data-c="yes">${pl?"Akceptuj":"Accept"}</button></div>`;
+  d.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;const v=b.dataset.c;try{localStorage.setItem("hq-consent",v)}catch(_){}if(v==="yes"&&window.gtag)gtag("consent","update",{analytics_storage:"granted"});d.remove()});
+  document.body.appendChild(d);
+}
+applyLang();intro();consentBar();
 if("serviceWorker" in navigator&&location.protocol!=="file:")addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
 </body>
