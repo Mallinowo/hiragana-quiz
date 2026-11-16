@@ -1,4 +1,4 @@
-const CACHE = "hiragana-v6";
+const CACHE = "hiragana-v7";
 const FILES = ["./", "index.html", "manifest.json", "icon-192.png", "icon-512.png", "maskable-512.png", "apple-touch-icon.png", "favicon-32.png",
   "inter-400.woff2", "inter-500.woff2", "inter-600.woff2", "inter-700.woff2", "inter-800.woff2", "klee.woff2"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))); self.skipWaiting(); });
