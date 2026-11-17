@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f3eee3">
-<meta name="description" content="Quiz z hiragany: 46 znaków, dakuten, tryb treningowy i tablica. Działa offline.">
+<meta name="description" content="Quiz z hiragany i katakany: podstawowe znaki, dakuten, tryb treningowy i tablica. Działa offline.">
 <link rel="manifest" href="manifest.json">
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}var _c=null;try{_c=localStorage.getItem("hq-consent")}catch(e){}gtag("consent","default",{ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",analytics_storage:_c==="yes"?"granted":"denied"});gtag("js",new Date());gtag("config","G-72LYLPWTR1");</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-72LYLPWTR1"></script>
@@ -135,7 +135,7 @@ button.pill{cursor:pointer;font:inherit;font-size:13px;font-weight:600}
 .ov{position:fixed;inset:0;background:rgba(15,16,22,.97);overflow:auto;padding:20px;display:none;z-index:10}
 .ov.on{display:block;animation:fadeIn .2s both}
 .ovin{max-width:560px;margin:0 auto}
-.ovtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;position:sticky;top:-20px;background:rgba(15,16,22,.97);padding:10px 0}
+.ovtop{z-index:3;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;position:sticky;top:-20px;background:rgba(15,16,22,.97);padding:10px 0}
 .ovtop h1{font-size:16px;margin:0}
 table.tb{border-collapse:separate;border-spacing:5px;width:100%;table-layout:fixed;margin-bottom:22px}
 .tb th{font-size:12px;color:var(--mute);font-weight:600;padding:2px;width:9%}
@@ -204,7 +204,7 @@ body{background:var(--bg);color:var(--ink)}
 .cc div{display:flex;gap:8px}
 .cc button{flex:1;height:44px;border-radius:12px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid var(--line);background:transparent;color:var(--ink)}
 .cc button.y{background:var(--acc);border-color:var(--acc);color:#fff}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.orb.ok circle{stroke-dashoffset:0}}
 </style>
 </head>
 <body>
@@ -218,13 +218,13 @@ const BASE=[["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"],["か","
 const DAK=[["が","ga"],["ぎ","gi"],["ぐ","gu"],["げ","ge"],["ご","go"],["ざ","za"],["じ","ji"],["ず","zu"],["ぜ","ze"],["ぞ","zo"],["だ","da"],["で","de"],["ど","do"],["ば","ba"],["び","bi"],["ぶ","bu"],["べ","be"],["ぼ","bo"],["ぱ","pa"],["ぴ","pi"],["ぷ","pu"],["ぺ","pe"],["ぽ","po"]];
 const L={
 pl:{score:"wynik",streak:"seria",chart:"Tablica",quiz:"QUIZ",practice:"TRENING",basic:"Podstawowe",dak:"Dakuten",all:"Wszystko",rand:"Losowo",seq:"Trening po kolei",
-h2:'Jak dobrze znasz <em>hiraganę?</em>',sub:n=>`${n} znaków · 4 odpowiedzi do wyboru`,start:"Start",chartLink:"Tablica hiragany",next:"Dalej",
+h2:k=>'Jak dobrze znasz <em>'+({hira:'hiraganę?',kata:'katakanę?',both:'hiraganę i katakanę?'})[k]+'</em>',sub:n=>`${n} ${n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?'znaki':'znaków'} · 4 odpowiedzi do wyboru`,start:"Start",chartLink:"Tablica znaków",both:"Obie",next:"Dalej",
 great:"Świetnie!",good:"Dobrze idzie!",keep:"Jeszcze trochę ćwiczeń",of:n=>`z ${n}`,stats:(p,b)=>`${p}% · najdłuższa seria ×${b}`,flawless:"Bezbłędnie!",again:"Jeszcze raz",menu:"Menu",
-ovh:"Tablica ひらがな",close:"Zamknij",tb1:"Podstawowe",tb2:"Dakuten / handakuten",hint:"Klawisze 1–4 wybierają odpowiedź · Enter / spacja — dalej · Esc — menu",title:"Quiz z hiragany",back:"Wróć do menu",install:"Pobierz aplikację",ok:"Rozumiem",iosT:"Zainstaluj na iPhonie",iosP:"Apka trafi na ekran główny i będzie działać offline.",ios:["Stuknij <b>Udostępnij</b> na dolnym pasku Safari","Przewiń i wybierz <b>Do ekranu głównego</b>","Stuknij <b>Dodaj</b> w prawym górnym rogu"],andT:"Zainstaluj aplikację",andP:"Apka trafi na ekran główny i będzie działać offline.",and:["Otwórz menu przeglądarki <b>⋮</b>","Wybierz <b>Zainstaluj aplikację</b> albo <b>Dodaj do ekranu głównego</b>","Potwierdź <b>Zainstaluj</b>"]},
+ovh:"Tablica znaków",close:"Zamknij",tb1:"Podstawowe",tb2:"Dakuten / handakuten",hint:"Klawisze 1–4 wybierają odpowiedź · Enter / spacja — dalej · Esc — menu",title:"Quiz z hiragany i katakany",back:"Wróć do menu",install:"Pobierz aplikację",ok:"Rozumiem",iosT:"Zainstaluj na iPhonie",iosP:"Apka trafi na ekran główny i będzie działać offline.",ios:["Stuknij <b>Udostępnij</b> na dolnym pasku Safari","Przewiń i wybierz <b>Do ekranu głównego</b>","Stuknij <b>Dodaj</b> w prawym górnym rogu"],andT:"Zainstaluj aplikację",andP:"Apka trafi na ekran główny i będzie działać offline.",and:["Otwórz menu przeglądarki <b>⋮</b>","Wybierz <b>Zainstaluj aplikację</b> albo <b>Dodaj do ekranu głównego</b>","Potwierdź <b>Zainstaluj</b>"]},
 en:{score:"score",streak:"streak",chart:"Chart",quiz:"QUIZ",practice:"PRACTICE",basic:"Basic",dak:"Dakuten",all:"All",rand:"Random",seq:"Practice in order",
-h2:'How well do you know <em>hiragana?</em>',sub:n=>`${n} characters · 4 choices`,start:"Start",chartLink:"Hiragana chart",next:"Next",
+h2:k=>'How well do you know <em>'+({hira:'hiragana?',kata:'katakana?',both:'hiragana & katakana?'})[k]+'</em>',sub:n=>`${n} characters · 4 choices`,start:"Start",chartLink:"Kana chart",both:"Both",next:"Next",
 great:"Great job!",good:"Nice going!",keep:"Keep practicing",of:n=>`of ${n}`,stats:(p,b)=>`${p}% · best streak ×${b}`,flawless:"Flawless!",again:"Play again",menu:"Menu",
-ovh:"ひらがな chart",close:"Close",tb1:"Basic",tb2:"Dakuten / handakuten",hint:"Keys 1–4 pick an answer · Enter / space — next · Esc — menu",title:"Hiragana quiz",back:"Back to menu",install:"Get the app",ok:"Got it",iosT:"Install on iPhone",iosP:"The app goes on your home screen and works offline.",ios:["Tap <b>Share</b> in Safari's bottom bar","Scroll and choose <b>Add to Home Screen</b>","Tap <b>Add</b> in the top right corner"],andT:"Install the app",andP:"The app goes on your home screen and works offline.",and:["Open the browser menu <b>⋮</b>","Choose <b>Install app</b> or <b>Add to Home screen</b>","Confirm with <b>Install</b>"]}};
+ovh:"Kana chart",close:"Close",tb1:"Basic",tb2:"Dakuten / handakuten",hint:"Keys 1–4 pick an answer · Enter / space — next · Esc — menu",title:"Hiragana & Katakana quiz",back:"Back to menu",install:"Get the app",ok:"Got it",iosT:"Install on iPhone",iosP:"The app goes on your home screen and works offline.",ios:["Tap <b>Share</b> in Safari's bottom bar","Scroll and choose <b>Add to Home Screen</b>","Tap <b>Add</b> in the top right corner"],andT:"Install the app",andP:"The app goes on your home screen and works offline.",and:["Open the browser menu <b>⋮</b>","Choose <b>Install app</b> or <b>Add to Home screen</b>","Confirm with <b>Install</b>"]}};
 let lang="pl";try{const v=localStorage.getItem("hq-lang");if(v==="en"||v==="pl")lang=v;else if(!(navigator.language||"").startsWith("pl"))lang="en"}catch(e){}
 const T=k=>L[lang][k];
 function applyLang(){document.documentElement.lang=lang;document.title=T("title");document.getElementById("ovh").textContent=T("ovh");document.getElementById("ovx").textContent=T("close");document.getElementById("hint").textContent=T("hint");buildTable()}
@@ -247,17 +247,23 @@ function sfx(kind){
   }catch(e){}
 }
 const app=document.getElementById("app"),wm=document.getElementById("wm");
+let script="hira";try{const v=localStorage.getItem("hq-script");if(v==="kata"||v==="both")script=v}catch(e){}
 let mode="base",order="rand",pool=[],queue=[],idx=0,score=0,streak=0,best=0,answered=false,wrong=[],cur=null,timer=null;
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-const getPool=()=>mode==="base"?BASE:mode==="dak"?DAK:BASE.concat(DAK);
+const toK=c=>c===" "?c:String.fromCharCode(c.charCodeAt(0)+96);
+const KBASE=BASE.map(x=>[toK(x[0]),x[1]]),KDAK=DAK.map(x=>[toK(x[0]),x[1]]);
+const setOf=(b,d)=>mode==="base"?b:mode==="dak"?d:b.concat(d);
+const getPool=()=>script==="hira"?setOf(BASE,DAK):script==="kata"?setOf(KBASE,KDAK):setOf(BASE,DAK).concat(setOf(KBASE,KDAK));
+const bigLabel=()=>script==="kata"?"カタカナ":script==="both"?"かなカナ":"ひらがな";
+const wmFirst=()=>script==="kata"?"ア":"あ";
 function setWm(c){wm.textContent=c;wm.style.animation="none";void wm.offsetWidth;wm.style.animation=""}
-function topBar(){return`<div class="top"><div class="lft"><button class="back" id="back" title="${T("back")}" aria-label="${T("back")}">‹</button><div class="logo"><i></i><span>ひらがな</span></div></div><div class="pills"><div class="pill" id="sc">${T("score")} <b>${score}</b></div><div class="pill ${streak>=3?"hot":""}" id="st">${T("streak")} <b>×${streak}</b></div><button class="pill" data-t="1">${T("chart")}</button></div></div>`}
-function start(){track("quiz_start",{mode,order,lang});pool=getPool();queue=order==="seq"?pool.slice():shuffle(pool);idx=0;score=0;streak=0;best=0;wrong=[];render()}
+function topBar(){return`<div class="top"><div class="lft"><button class="back" id="back" title="${T("back")}" aria-label="${T("back")}">‹</button><div class="logo"><i></i><span>${bigLabel()}</span></div></div><div class="pills"><div class="pill" id="sc">${T("score")} <b>${score}</b></div><div class="pill ${streak>=3?"hot":""}" id="st">${T("streak")} <b>×${streak}</b></div><button class="pill" data-t="1">${T("chart")}</button></div></div>`}
+function start(){track("quiz_start",{script,mode,order,lang});pool=getPool();queue=order==="seq"?pool.slice():shuffle(pool);idx=0;score=0;streak=0;best=0;wrong=[];render()}
 function render(){
   clearTimeout(timer);
   if(idx>=queue.length)return end();
   cur=queue[idx];answered=false;setWm(cur[0]);
-  const others=shuffle(pool.filter(p=>p[1]!==cur[1])).slice(0,3);
+  const seen=new Set([cur[1]]);const others=shuffle(pool).filter(p=>!seen.has(p[1])&&seen.add(p[1])).slice(0,3);
   const opts=shuffle([cur].concat(others));
   app.className="";
   app.innerHTML=`${topBar()}
@@ -279,15 +285,16 @@ function pick(btn){
 }
 function next(){if(!answered)return;answered=false;clearTimeout(timer);app.classList.add("leave");timer=setTimeout(()=>{idx++;render()},220)}
 function modeChips(){
+  const scr=[["hira","Hiragana"],["kata","Katakana"],["both",T("both")]].map(x=>`<button class="chip ${script===x[0]?"on":""}" data-s="${x[0]}">${x[1]}</button>`).join("");
   const sets=[["base",T("basic")],["dak",T("dak")],["all",T("all")]].map(m=>`<button class="chip ${mode===m[0]?"on":""}" data-m="${m[0]}">${m[1]}</button>`).join("");
   const ord=[["rand",T("rand")],["seq",T("seq")]].map(o=>`<button class="chip ${order===o[0]?"on":""}" data-o="${o[0]}">${o[1]}</button>`).join("");
-  return`<div class="chips">${sets}</div><div class="chips">${ord}</div>`;
+  return`<div class="chips">${scr}</div><div class="chips">${sets}</div><div class="chips">${ord}</div>`;
 }
-function bindModes(){app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{if(c.dataset.m)mode=c.dataset.m;else order=c.dataset.o;app.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.m?x.dataset.m===mode:x.dataset.o===order));const p=document.getElementById("sub");if(p)p.textContent=T("sub")(getPool().length)})}
+function bindModes(){app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{if(c.dataset.s){script=c.dataset.s;try{localStorage.setItem("hq-script",script)}catch(e){}if(document.getElementById("go")){intro();return}}else if(c.dataset.m)mode=c.dataset.m;else order=c.dataset.o;app.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.s?x.dataset.s===script:x.dataset.m?x.dataset.m===mode:x.dataset.o===order));const p=document.getElementById("sub");if(p)p.textContent=T("sub")(getPool().length)})}
 function intro(){
-  clearTimeout(timer);app.className="";setWm("あ");
-  app.innerHTML=`<div class="top" style="justify-content:flex-end"><div class="topr"><button class="snd" id="snd" aria-label="sound">${sndOn?SND_ON:SND_OFF}</button><div class="lang"><button data-l="pl" class="${lang==="pl"?"on":""}">PL</button><button data-l="en" class="${lang==="en"?"on":""}">EN</button></div></div></div><div class="hero"><div class="big kf">${[..."ひらがな"].map((c,i)=>`<span style="animation-delay:${i*.07}s">${c}</span>`).join("")}</div>
-  <h2>${T("h2")}</h2><p id="sub">${T("sub")(getPool().length)}</p>
+  clearTimeout(timer);app.className="";setWm(wmFirst());
+  app.innerHTML=`<div class="top" style="justify-content:flex-end"><div class="topr"><button class="snd" id="snd" aria-label="sound">${sndOn?SND_ON:SND_OFF}</button><div class="lang"><button data-l="pl" class="${lang==="pl"?"on":""}">PL</button><button data-l="en" class="${lang==="en"?"on":""}">EN</button></div></div></div><div class="hero"><div class="big kf">${[...bigLabel()].map((c,i)=>`<span style="animation-delay:${i*.07}s">${c}</span>`).join("")}</div>
+  <h2>${T("h2")(script)}</h2><p id="sub">${T("sub")(getPool().length)}</p>
   <div class="setup chips a" style="flex-direction:column;gap:0">${modeChips()}</div></div>
   <div class="foot2"><button class="btn" id="go">${T("start")}</button><button class="inst" id="inst"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>${T("install")}</button><button class="link" data-t="1">${T("chartLink")}</button></div>`;
   app.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>setLang(b.dataset.l));
@@ -296,29 +303,30 @@ function intro(){
   bindModes();document.getElementById("go").onclick=start;
 }
 function end(){
-  clearTimeout(timer);app.className="";setWm("ん");
+  clearTimeout(timer);app.className="";setWm(script==="kata"?"ン":"ん");
   const pct=Math.round(score/queue.length*100);
   app.innerHTML=`${topBar()}<div class="hero end"><div class="ring"><svg viewBox="0 0 100 100"><circle class="bgc" cx="50" cy="50" r="44" pathLength="100"/><circle class="fg" id="fg" cx="50" cy="50" r="44" pathLength="100" style="stroke-dashoffset:100"/></svg><div class="c"><b id="big">0</b><span>${T("of")(queue.length)}</span></div></div>
   <h2>${pct>=90?T("great"):pct>=60?T("good"):T("keep")}</h2><p>${T("stats")(pct,best)}</p>
   ${wrong.length?`<div class="miss">${wrong.map(w=>`<span><b class="kf">${w[0]}</b>${w[1]}</span>`).join("")}</div>`:`<p style="margin-top:12px">${T("flawless")}</p>`}
   <div class="setup chips a" style="flex-direction:column;gap:0;margin-top:22px">${modeChips()}</div></div>
   <div class="foot2"><button class="btn" id="again">${T("again")}</button><button class="link" id="menu">${T("menu")}</button></div>`;
-  sfx("end");track("quiz_finish",{score,total:queue.length,pct,mode,order});
+  sfx("end");track("quiz_finish",{script,score,total:queue.length,pct,mode,order});
   const bg=document.getElementById("big"),fg=document.getElementById("fg"),t0=performance.now(),dur=1100;
   (function tick(n){const k=Math.min(1,Math.max(0,(n-t0-150)/dur)),e=1-Math.pow(1-k,3);bg.textContent=Math.round(score*e);fg.style.strokeDashoffset=100-pct*e;if(k<1)requestAnimationFrame(tick)})(t0);
   bindModes();document.getElementById("again").onclick=start;document.getElementById("menu").onclick=intro;
 }
-const RM={};BASE.concat(DAK).forEach(x=>RM[x[0]]=x[1]);RM["ぢ"]="ji";RM["づ"]="zu";
+const RM={};BASE.concat(DAK,KBASE,KDAK).forEach(x=>RM[x[0]]=x[1]);RM["ぢ"]=RM["ヂ"]="ji";RM["づ"]=RM["ヅ"]="zu";
 const ROWS=[["","あいうえお"],["k","かきくけこ"],["s","さしすせそ"],["t","たちつてと"],["n","なにぬねの"],["h","はひふへほ"],["m","まみむめも"],["y","や ゆ よ"],["r","らりるれろ"],["w","わ   を"],["","ん    "]];
 const ROWS2=[["g","がぎぐげご"],["z","ざじずぜぞ"],["d","だぢづでど"],["b","ばびぶべぼ"],["p","ぱぴぷぺぽ"]];
 function tbl(rows){
   const head="<tr><th></th>"+["a","i","u","e","o"].map(v=>`<th>${v}</th>`).join("")+"</tr>";
   return`<table class="tb">${head}${rows.map(r=>`<tr><th>${r[0]}</th>${[...r[1]].map(c=>c===" "?'<td class="e"></td>':`<td class="kf">${c}<small>${RM[c]}</small></td>`).join("")}</tr>`).join("")}</table>`;
 }
-function buildTable(){document.getElementById("ovbody").innerHTML=`<h2>${T("tb1")}</h2>`+tbl(ROWS)+`<h2>${T("tb2")}</h2>`+tbl(ROWS2)}
+const kRows=rows=>rows.map(r=>[r[0],[...r[1]].map(toK).join("")]);
+function buildTable(){const part=(n,a,b)=>`<h2>${n} · ${T("tb1")}</h2>`+tbl(a)+`<h2>${n} · ${T("tb2")}</h2>`+tbl(b);let h="";if(script!=="kata")h+=part("Hiragana",ROWS,ROWS2);if(script!=="hira")h+=part("Katakana",kRows(ROWS),kRows(ROWS2));document.getElementById("ovbody").innerHTML=h}
 const ov=document.getElementById("ov"),closeOv=()=>ov.classList.remove("on");
 document.getElementById("ovx").onclick=closeOv;
-document.addEventListener("click",e=>{if(e.target.closest("[data-t]")){ov.classList.add("on");ov.scrollTop=0}else if(e.target.closest("#back"))intro()});
+document.addEventListener("click",e=>{if(e.target.closest("[data-t]")){buildTable();ov.classList.add("on");ov.scrollTop=0}else if(e.target.closest("#back"))intro()});
 document.addEventListener("keydown",e=>{
   if(sheet.classList.contains("on")){if(e.key==="Escape")closeSheet();return}
   if(ov.classList.contains("on")){if(e.key==="Escape")closeOv();return}
