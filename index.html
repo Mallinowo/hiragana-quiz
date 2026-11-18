@@ -770,7 +770,8 @@ const READ_K=[
 ["シャワーを あびます。", ["shawaa", "O", "abimasu"], "Biorę prysznic.", "I take a shower."]
 ];
 const READ_ROUND=20;
-const readPool=()=>script==="hira"?READ_H:script==="kata"?READ_K:READ_H.concat(READ_K);
+const hasKata=x=>/[\u30A1-\u30FA\u30FC]/.test(x);
+const readPool=()=>script==="hira"?READ_H.filter(x=>!hasKata(x[0])):script==="kata"?READ_K:READ_H.concat(READ_K);
 const normR=x=>x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/ā/g,"aa").replace(/[^a-z]/g,"");
 const subText=()=>order==="read"?T("readSub")(readPool().length):T("sub")(getPool().length);
 const bigLabel=()=>script==="kata"?"カタカナ":script==="both"?"かなカナ":"ひらがな";
