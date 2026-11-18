@@ -240,6 +240,30 @@ body.atend .hint{display:none}
 .yk{display:inline-block;letter-spacing:-.2em;margin-left:-.2em}
 .tb td small{letter-spacing:0}
 .tb.ty th{width:12%}
+.menu{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;padding:6px 0 18px}
+.menu .big{font-size:min(16vw,76px);line-height:1.1;margin-top:8px}
+.menu .big span{display:inline-block;animation:rise .6s var(--ease) both}
+.menu h2{font-size:min(7vw,30px);font-weight:800;letter-spacing:-.02em;margin:14px 0 18px;line-height:1.2;animation:up .5s var(--ease) .25s both}
+.menu h2 em{font-style:normal;color:var(--acc)}
+.seg{display:flex;width:100%;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px}
+.seg button{flex:1;height:40px;border:0;border-radius:10px;background:transparent;font:inherit;font-size:14px;font-weight:700;color:var(--mute);cursor:pointer;transition:background .2s,color .2s}
+.seg button.on{background:var(--acc);color:#fff}
+.lbl{align-self:flex-start;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px 2px}
+.acts,.opts1{display:flex;flex-direction:column;gap:10px;width:100%}
+.act,.optc{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:13px 14px;border-radius:18px;border:1.5px solid var(--line);background:var(--surf);color:var(--ink);font:inherit;cursor:pointer;box-shadow:0 2px 0 rgba(34,29,23,.06);transition:border-color .2s,background .2s,transform .15s;animation:up .45s var(--ease) both}
+.act:nth-child(2),.optc:nth-child(2){animation-delay:.05s}.act:nth-child(3),.optc:nth-child(3){animation-delay:.1s}.optc:nth-child(4){animation-delay:.15s}
+.act:active,.optc:active{transform:scale(.985)}
+.ai{flex:none;width:50px;height:50px;border-radius:14px;background:rgba(200,55,45,.08);color:var(--acc);display:grid;place-items:center;font-size:22px;letter-spacing:-.15em}
+.at,.oc-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.at b,.oc-t b{font-size:17px;font-weight:700}
+.at small,.oc-t small{font-size:13px;color:var(--mute);line-height:1.35}
+.an{flex:none;font-size:12px;font-weight:700;color:var(--mute);background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:4px 9px}
+.oc-k{flex:none;width:84px;font-size:22px;color:var(--acc);letter-spacing:-.08em}
+.oc-r{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line)}
+.optc.on{border-color:var(--acc);background:rgba(200,55,45,.06)}
+.optc.on .oc-r{border:6px solid var(--acc)}
+.setupw .lbl:first-child{margin-top:8px}
+.stitle{font-weight:800;font-size:18px;letter-spacing:-.01em}
 .cc{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:456px;margin:0 auto;background:var(--surf2);border:1px solid var(--line);border-radius:18px;padding:16px;z-index:30;box-shadow:0 12px 40px -12px rgba(60,40,20,.35);animation:up .35s var(--ease) both}
 .cc p{margin:0 0 12px;font-size:13.5px;line-height:1.45;color:var(--mute)}
 .cc div{display:flex;gap:8px}
@@ -259,11 +283,11 @@ const BASE=[["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"],["か","
 const DAK=[["が","ga"],["ぎ","gi"],["ぐ","gu"],["げ","ge"],["ご","go"],["ざ","za"],["じ","ji"],["ず","zu"],["ぜ","ze"],["ぞ","zo"],["だ","da"],["で","de"],["ど","do"],["ば","ba"],["び","bi"],["ぶ","bu"],["べ","be"],["ぼ","bo"],["ぱ","pa"],["ぴ","pi"],["ぷ","pu"],["ぺ","pe"],["ぽ","po"]];
 const L={
 pl:{score:"wynik",streak:"seria",chart:"Tablica",quiz:"QUIZ",practice:"TRENING",basic:"Podstawowe",dak:"Dakuten",all:"Wszystko",rand:"Losowo",seq:"Trening po kolei",
-h2:k=>'Jak dobrze znasz <em>'+({hira:'hiraganę?',kata:'katakanę?',both:'hiraganę i katakanę?'})[k]+'</em>',sub:n=>`${n} ${n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?'znaki':'znaków'} · 4 odpowiedzi do wyboru`,start:"Start",chartLink:"Tablica znaków",both:"Obie",yoon:"Yōon (きゃ)",tb3:"Yōon – małe ゃ ゅ ょ",sokuNote:"Małe <b>っ</b> podwaja następną spółgłoskę: がっこう = ga<b>kk</b>ou, きって = ki<b>tt</b>e. Długie samogłoski zapisujemy podwójnie: とうきょう = t<b>ou</b>ky<b>ou</b>, おかあさん = ok<b>aa</b>san. W katakanie długość oznacza kreska <b>ー</b>: コーヒー = k<b>oo</b>h<b>ii</b>.",readM:"Czytanie",readT:"CZYTANIE",readSub:n=>`${n} słów i zdań · rundy po 20 · wpisz romaji`,check:"Sprawdź",readPh:"wpisz romaji…",readEmpty:"Wpisz odpowiedź",readYour:"Twoja odpowiedź",readAlmost:(k,r)=>`Zaliczone, ale jako partykuła ${k} czytamy „${r}”.`,readLong:"Zaliczone, ale pamiętaj o długich samogłoskach (np. ou, uu, ii).",conf:"Mylące się",partT:"Partykuły",partBtn:"Partykuły ↓",partNote:"Jako partykuły: は czytamy <b>wa</b>, を czytamy <b>o</b>, へ czytamy <b>e</b>.",parts:[["は","wa","temat zdania – o kim/czym mowa","わたしは がくせいです","watashi wa gakusei desu","Jestem studentem."],["を","o","dopełnienie – co? kogo?","ほんを よみます","hon o yomimasu","Czytam książkę."],["に","ni","gdzie coś jest, dokąd, kiedy","うちに います","uchi ni imasu","Jestem w domu."],["へ","e","w stronę czegoś (kierunek)","やまへ いきます","yama e ikimasu","Idę w góry."],["と","to","z kimś; „i” między rzeczownikami","ははと いきます","haha to ikimasu","Idę z mamą."],["の","no","czyje? czego?","ははの ほん","haha no hon","książka mamy"],["も","mo","też, również","わたしも","watashi mo","ja też"],["が","ga","podmiot – kto? co? (np. przy すき, います)","ねこが います","neko ga imasu","Jest kot."],["で","de","gdzie coś się dzieje; czym","うちで よみます","uchi de yomimasu","Czytam w domu."]],next:"Dalej",
+h2:k=>'Jak dobrze znasz <em>'+({hira:'hiraganę?',kata:'katakanę?',both:'hiraganę i katakanę?'})[k]+'</em>',sub:n=>`${n} ${n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?'znaki':'znaków'} · 4 odpowiedzi do wyboru`,start:"Start",chartLink:"Tablica znaków",both:"Obie",pickT:"Co ćwiczysz?",scrT:"Pismo",setT:"Które znaki?",ordT:"Kolejność",seqShort:"Po kolei",act1:"Znaki",act1d:"Widzisz znak, wybierasz czytanie",act2:"Czytanie",act2d:"Czytasz słowa i zdania, wpisujesz romaji",act3:"Mylące się znaki",act3d:"Podobne znaki: さ・き・ち, ね・れ・わ",cnt:n=>`${n} ${n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?"znaki":"znaków"}`,rcnt:n=>`${n} słów`,yoon:"Yōon (きゃ)",tb3:"Yōon – małe ゃ ゅ ょ",sokuNote:"Małe <b>っ</b> podwaja następną spółgłoskę: がっこう = ga<b>kk</b>ou, きって = ki<b>tt</b>e. Długie samogłoski zapisujemy podwójnie: とうきょう = t<b>ou</b>ky<b>ou</b>, おかあさん = ok<b>aa</b>san. W katakanie długość oznacza kreska <b>ー</b>: コーヒー = k<b>oo</b>h<b>ii</b>.",readM:"Czytanie",readT:"CZYTANIE",readSub:n=>`${n} słów i zdań · rundy po 20 · wpisz romaji`,check:"Sprawdź",readPh:"wpisz romaji…",readEmpty:"Wpisz odpowiedź",readYour:"Twoja odpowiedź",readAlmost:(k,r)=>`Zaliczone, ale jako partykuła ${k} czytamy „${r}”.`,readLong:"Zaliczone, ale pamiętaj o długich samogłoskach (np. ou, uu, ii).",conf:"Mylące się",partT:"Partykuły",partBtn:"Partykuły ↓",partNote:"Jako partykuły: は czytamy <b>wa</b>, を czytamy <b>o</b>, へ czytamy <b>e</b>.",parts:[["は","wa","temat zdania – o kim/czym mowa","わたしは がくせいです","watashi wa gakusei desu","Jestem studentem."],["を","o","dopełnienie – co? kogo?","ほんを よみます","hon o yomimasu","Czytam książkę."],["に","ni","gdzie coś jest, dokąd, kiedy","うちに います","uchi ni imasu","Jestem w domu."],["へ","e","w stronę czegoś (kierunek)","やまへ いきます","yama e ikimasu","Idę w góry."],["と","to","z kimś; „i” między rzeczownikami","ははと いきます","haha to ikimasu","Idę z mamą."],["の","no","czyje? czego?","ははの ほん","haha no hon","książka mamy"],["も","mo","też, również","わたしも","watashi mo","ja też"],["が","ga","podmiot – kto? co? (np. przy すき, います)","ねこが います","neko ga imasu","Jest kot."],["で","de","gdzie coś się dzieje; czym","うちで よみます","uchi de yomimasu","Czytam w domu."]],next:"Dalej",
 great:"Świetnie!",good:"Dobrze idzie!",keep:"Jeszcze trochę ćwiczeń",of:n=>`z ${n}`,stats:(p,b)=>`${p}% · najdłuższa seria ×${b}`,flawless:"Bezbłędnie!",again:"Jeszcze raz",menu:"Menu",
 ovh:"Tablica znaków",close:"Zamknij",tb1:"Podstawowe",tb2:"Dakuten / handakuten",hint:"Klawisze 1–4 wybierają odpowiedź · Enter / spacja — dalej · Esc — menu",title:"Quiz z hiragany i katakany",back:"Wróć do menu",install:"Pobierz aplikację",ok:"Rozumiem",iosT:"Zainstaluj na iPhonie",iosP:"Apka trafi na ekran główny i będzie działać offline.",ios:["Stuknij <b>Udostępnij</b> na dolnym pasku Safari","Przewiń i wybierz <b>Do ekranu głównego</b>","Stuknij <b>Dodaj</b> w prawym górnym rogu"],andT:"Zainstaluj aplikację",andP:"Apka trafi na ekran główny i będzie działać offline.",and:["Otwórz menu przeglądarki <b>⋮</b>","Wybierz <b>Zainstaluj aplikację</b> albo <b>Dodaj do ekranu głównego</b>","Potwierdź <b>Zainstaluj</b>"]},
 en:{score:"score",streak:"streak",chart:"Chart",quiz:"QUIZ",practice:"PRACTICE",basic:"Basic",dak:"Dakuten",all:"All",rand:"Random",seq:"Practice in order",
-h2:k=>'How well do you know <em>'+({hira:'hiragana?',kata:'katakana?',both:'hiragana & katakana?'})[k]+'</em>',sub:n=>`${n} characters · 4 choices`,start:"Start",chartLink:"Kana chart",both:"Both",yoon:"Yōon (きゃ)",tb3:"Yōon – small ゃ ゅ ょ",sokuNote:"A small <b>っ</b> doubles the next consonant: がっこう = ga<b>kk</b>ou, きって = ki<b>tt</b>e. Long vowels are written double: とうきょう = t<b>ou</b>ky<b>ou</b>, おかあさん = ok<b>aa</b>san. In katakana the dash <b>ー</b> marks length: コーヒー = k<b>oo</b>h<b>ii</b>.",readM:"Reading",readT:"READING",readSub:n=>`${n} words and sentences · rounds of 20 · type romaji`,check:"Check",readPh:"type romaji…",readEmpty:"Type an answer first",readYour:"Your answer",readAlmost:(k,r)=>`Accepted, but as a particle ${k} is read “${r}”.`,readLong:"Accepted, but mind the long vowels (e.g. ou, uu, ii).",conf:"Look-alikes",partT:"Particles",partBtn:"Particles ↓",partNote:"As particles: は is read <b>wa</b>, を is read <b>o</b>, へ is read <b>e</b>.",parts:[["は","wa","topic – who/what we talk about","わたしは がくせいです","watashi wa gakusei desu","I am a student."],["を","o","object – what? whom?","ほんを よみます","hon o yomimasu","I read a book."],["に","ni","where something is, where to, when","うちに います","uchi ni imasu","I am at home."],["へ","e","towards (direction)","やまへ いきます","yama e ikimasu","I go to the mountains."],["と","to","with someone; “and” between nouns","ははと いきます","haha to ikimasu","I go with mom."],["の","no","whose? of what?","ははの ほん","haha no hon","mom's book"],["も","mo","also, too","わたしも","watashi mo","me too"],["が","ga","subject – who? what? (e.g. with すき, います)","ねこが います","neko ga imasu","There is a cat."],["で","de","where an action happens; with what","うちで よみます","uchi de yomimasu","I read at home."]],next:"Next",
+h2:k=>'How well do you know <em>'+({hira:'hiragana?',kata:'katakana?',both:'hiragana & katakana?'})[k]+'</em>',sub:n=>`${n} characters · 4 choices`,start:"Start",chartLink:"Kana chart",both:"Both",pickT:"What do you want to practice?",scrT:"Script",setT:"Which characters?",ordT:"Order",seqShort:"In order",act1:"Characters",act1d:"See a character, pick its reading",act2:"Reading",act2d:"Read words and sentences, type romaji",act3:"Look-alikes",act3d:"Similar ones: さ・き・ち, ね・れ・わ",cnt:n=>`${n} chars`,rcnt:n=>`${n} items`,yoon:"Yōon (きゃ)",tb3:"Yōon – small ゃ ゅ ょ",sokuNote:"A small <b>っ</b> doubles the next consonant: がっこう = ga<b>kk</b>ou, きって = ki<b>tt</b>e. Long vowels are written double: とうきょう = t<b>ou</b>ky<b>ou</b>, おかあさん = ok<b>aa</b>san. In katakana the dash <b>ー</b> marks length: コーヒー = k<b>oo</b>h<b>ii</b>.",readM:"Reading",readT:"READING",readSub:n=>`${n} words and sentences · rounds of 20 · type romaji`,check:"Check",readPh:"type romaji…",readEmpty:"Type an answer first",readYour:"Your answer",readAlmost:(k,r)=>`Accepted, but as a particle ${k} is read “${r}”.`,readLong:"Accepted, but mind the long vowels (e.g. ou, uu, ii).",conf:"Look-alikes",partT:"Particles",partBtn:"Particles ↓",partNote:"As particles: は is read <b>wa</b>, を is read <b>o</b>, へ is read <b>e</b>.",parts:[["は","wa","topic – who/what we talk about","わたしは がくせいです","watashi wa gakusei desu","I am a student."],["を","o","object – what? whom?","ほんを よみます","hon o yomimasu","I read a book."],["に","ni","where something is, where to, when","うちに います","uchi ni imasu","I am at home."],["へ","e","towards (direction)","やまへ いきます","yama e ikimasu","I go to the mountains."],["と","to","with someone; “and” between nouns","ははと いきます","haha to ikimasu","I go with mom."],["の","no","whose? of what?","ははの ほん","haha no hon","mom's book"],["も","mo","also, too","わたしも","watashi mo","me too"],["が","ga","subject – who? what? (e.g. with すき, います)","ねこが います","neko ga imasu","There is a cat."],["で","de","where an action happens; with what","うちで よみます","uchi de yomimasu","I read at home."]],next:"Next",
 great:"Great job!",good:"Nice going!",keep:"Keep practicing",of:n=>`of ${n}`,stats:(p,b)=>`${p}% · best streak ×${b}`,flawless:"Flawless!",again:"Play again",menu:"Menu",
 ovh:"Kana chart",close:"Close",tb1:"Basic",tb2:"Dakuten / handakuten",hint:"Keys 1–4 pick an answer · Enter / space — next · Esc — menu",title:"Hiragana & Katakana quiz",back:"Back to menu",install:"Get the app",ok:"Got it",iosT:"Install on iPhone",iosP:"The app goes on your home screen and works offline.",ios:["Tap <b>Share</b> in Safari's bottom bar","Scroll and choose <b>Add to Home Screen</b>","Tap <b>Add</b> in the top right corner"],andT:"Install the app",andP:"The app goes on your home screen and works offline.",and:["Open the browser menu <b>⋮</b>","Choose <b>Install app</b> or <b>Add to Home screen</b>","Confirm with <b>Install</b>"]}};
 let lang="pl";try{const v=localStorage.getItem("hq-lang");if(v==="en"||v==="pl")lang=v;else if(!(navigator.language||"").startsWith("pl"))lang="en"}catch(e){}
@@ -861,17 +885,46 @@ function modeChips(){
   return`<div class="chips">${scr}</div><div class="chips">${sets}</div><div class="chips">${ord}</div>`;
 }
 function bindModes(){app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{if(c.dataset.s){script=c.dataset.s;try{localStorage.setItem("hq-script",script)}catch(e){}if(document.getElementById("go")){intro();return}}else if(c.dataset.m)mode=c.dataset.m;else order=c.dataset.o;app.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.s?x.dataset.s===script:x.dataset.m?x.dataset.m===mode:x.dataset.o===order));const p=document.getElementById("sub");if(p)p.textContent=subText()})}
+function scriptSeg(){return`<div class="seg">${[["hira","Hiragana"],["kata","Katakana"],["both",T("both")]].map(x=>`<button class="${script===x[0]?"on":""}" data-s="${x[0]}">${x[1]}</button>`).join("")}</div>`}
+function bindScript(after){app.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{script=b.dataset.s;try{localStorage.setItem("hq-script",script)}catch(e){}after()})}
+const kv=x=>script==="kata"?toKs(x):x;
+const poolN=md=>{const m0=mode;mode=md;const n=getPool().length;mode=m0;return n};
 function intro(){
   document.body.classList.remove("atend");
   clearTimeout(timer);app.className="";setWm(wmFirst());
-  app.innerHTML=`<div class="top" style="justify-content:flex-end"><div class="topr"><button class="snd" id="snd" aria-label="sound">${sndOn?SND_ON:SND_OFF}</button><div class="lang"><button data-l="pl" class="${lang==="pl"?"on":""}">PL</button><button data-l="en" class="${lang==="en"?"on":""}">EN</button></div></div></div><div class="hero"><div class="big kf">${[...bigLabel()].map((c,i)=>`<span style="animation-delay:${i*.07}s">${c}</span>`).join("")}</div>
-  <h2>${T("h2")(script)}</h2><p id="sub">${subText()}</p>
-  <div class="setup chips a" style="flex-direction:column;gap:0">${modeChips()}</div></div>
-  <div class="foot2"><button class="btn" id="go">${T("start")}</button><button class="inst" id="inst"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>${T("install")}</button><button class="link" data-t="1">${T("chartLink")}</button></div>`;
+  const acts=[["chars",kv("あ"),T("act1"),T("act1d"),T("cnt")(poolN("all"))],["read",kv("よむ"),T("act2"),T("act2d"),T("rcnt")(readPool().length)],["conf",kv("さき"),T("act3"),T("act3d"),T("cnt")(poolN("conf"))]];
+  app.innerHTML=`<div class="top" style="justify-content:flex-end"><div class="topr"><button class="snd" id="snd" aria-label="sound">${sndOn?SND_ON:SND_OFF}</button><div class="lang"><button data-l="pl" class="${lang==="pl"?"on":""}">PL</button><button data-l="en" class="${lang==="en"?"on":""}">EN</button></div></div></div>
+  <div class="menu"><div class="big kf">${[...bigLabel()].map((c,i)=>`<span style="animation-delay:${i*.07}s">${c}</span>`).join("")}</div>
+  <h2>${T("h2")(script)}</h2>
+  ${scriptSeg()}
+  <div class="lbl">${T("pickT")}</div>
+  <div class="acts">${acts.map(a=>`<button class="act" data-a="${a[0]}"><span class="ai kf">${a[1]}</span><span class="at"><b>${a[2]}</b><small>${a[3]}</small></span><span class="an">${a[4]}</span></button>`).join("")}</div></div>
+  <div class="foot2"><button class="inst" id="inst"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>${T("install")}</button><button class="link" data-t="1">${T("chartLink")}</button></div>`;
   app.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>setLang(b.dataset.l));
   document.getElementById("inst").onclick=install;updInst();
   document.getElementById("snd").onclick=e=>{sndOn=!sndOn;try{localStorage.setItem("hq-snd",sndOn?"1":"0")}catch(_){}e.currentTarget.innerHTML=sndOn?SND_ON:SND_OFF;if(sndOn)sfx("ok")};
-  bindModes();document.getElementById("go").onclick=start;
+  bindScript(intro);
+  app.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{const a=b.dataset.a;
+    if(a==="chars"){if(mode==="conf")mode="base";if(order==="read")order="rand";setup()}
+    else if(a==="read"){order="read";start()}
+    else{mode="conf";order="rand";start()}});
+}
+function setup(){
+  document.body.classList.remove("atend");app.className="";setWm(wmFirst());
+  const sets=[["base",T("basic"),kv("あいう")],["dak",T("dak"),kv("がざだ")],["yoon",T("yoon").replace(/\s*\(.*\)/,""),kv("きゃしゅ")],["all",T("all"),kv("あがきゃ")]];
+  app.innerHTML=`<div class="top"><div class="lft"><button class="back" id="sback" aria-label="${T("back")}">‹</button><div class="stitle">${T("act1")}</div></div></div>
+  <div class="menu setupw">
+  <div class="lbl">${T("scrT")}</div>${scriptSeg()}
+  <div class="lbl">${T("setT")}</div>
+  <div class="opts1">${sets.map(x=>`<button class="optc ${mode===x[0]?"on":""}" data-m="${x[0]}"><span class="oc-k kf">${x[2]}</span><span class="oc-t"><b>${x[1]}</b><small>${T("cnt")(poolN(x[0]))}</small></span><span class="oc-r"></span></button>`).join("")}</div>
+  <div class="lbl">${T("ordT")}</div>
+  <div class="seg">${[["rand",T("rand")],["seq",T("seqShort")]].map(x=>`<button class="${order===x[0]?"on":""}" data-o="${x[0]}">${x[1]}</button>`).join("")}</div></div>
+  <div class="foot2"><button class="btn" id="go">${T("start")}</button></div>`;
+  document.getElementById("sback").onclick=intro;
+  bindScript(setup);
+  app.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{mode=b.dataset.m;setup()});
+  app.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{order=b.dataset.o;app.querySelectorAll("[data-o]").forEach(x=>x.classList.toggle("on",x===b))});
+  document.getElementById("go").onclick=start;
 }
 function end(){
   document.body.classList.add("atend");clearTimeout(timer);app.className="";setWm(script==="kata"?"ン":"ん");
@@ -879,12 +932,12 @@ function end(){
   app.innerHTML=`${topBar()}<div class="hero end"><div class="ring"><svg viewBox="0 0 100 100"><circle class="bgc" cx="50" cy="50" r="44" pathLength="100"/><circle class="fg" id="fg" cx="50" cy="50" r="44" pathLength="100" style="stroke-dashoffset:100"/></svg><div class="c"><b id="big">0</b><span>${T("of")(queue.length)}</span></div></div>
   <h2>${pct>=90?T("great"):pct>=60?T("good"):T("keep")}</h2><p>${T("stats")(pct,best)}</p>
   ${wrong.length?`<div class="miss">${wrong.map(w=>[...w[0]].length>6?`<span class="ml"><b class="kf">${w[0]}</b><i>${w[1]}</i></span>`:`<span><b class="kf">${w[0]}</b>${w[1]}</span>`).join("")}</div>`:`<p style="margin-top:12px">${T("flawless")}</p>`}
-  <div class="setup chips a" style="flex-direction:column;gap:0;margin-top:22px">${modeChips()}</div></div>
+</div>
   <div class="foot2"><button class="btn" id="again">${T("again")}</button><button class="link" id="menu">${T("menu")}</button></div>`;
   sfx("end");track("quiz_finish",{script,score,total:queue.length,pct,mode,order});
   const bg=document.getElementById("big"),fg=document.getElementById("fg"),t0=performance.now(),dur=1100;
   (function tick(n){const k=Math.min(1,Math.max(0,(n-t0-150)/dur)),e=1-Math.pow(1-k,3);bg.textContent=Math.round(score*e);fg.style.strokeDashoffset=100-pct*e;if(k<1)requestAnimationFrame(tick)})(t0);
-  bindModes();document.getElementById("again").onclick=start;document.getElementById("menu").onclick=intro;
+  document.getElementById("again").onclick=start;document.getElementById("menu").onclick=intro;
 }
 const RM={};BASE.concat(DAK,KBASE,KDAK,YOON,KYOON).forEach(x=>RM[x[0]]=x[1]);RM["ぢ"]=RM["ヂ"]="ji";RM["づ"]=RM["ヅ"]="zu";
 const ROWS=[["","あいうえお"],["k","かきくけこ"],["s","さしすせそ"],["t","たちつてと"],["n","なにぬねの"],["h","はひふへほ"],["m","まみむめも"],["y","や ゆ よ"],["r","らりるれろ"],["w","わ   を"],["","ん    "]];
@@ -912,7 +965,7 @@ document.addEventListener("click",e=>{if(e.target.closest("[data-t]")){tview=nul
 document.addEventListener("keydown",e=>{
   if(sheet.classList.contains("on")){if(e.key==="Escape")closeSheet();return}
   if(ov.classList.contains("on")){if(e.key==="Escape")closeOv();return}
-  if(e.key==="Escape"&&!document.getElementById("go")){intro();return}
+  if(e.key==="Escape"&&!document.querySelector("[data-a]")){intro();return}
   if(e.target&&e.target.tagName==="INPUT")return;
   if(order==="read"&&(e.key==="Enter"||e.key===" ")&&document.getElementById("rb")){return}
   if(e.key>="1"&&e.key<="4"&&!answered){const b=app.querySelectorAll(".opt")[+e.key-1];if(b)pick(b)}
