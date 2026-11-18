@@ -12,7 +12,8 @@ Darmowy quiz do nauki japońskich sylabariuszy: hiragany i katakany. Działa w p
 - **Tryb losowy** albo **trening po kolei**, rząd po rzędzie jak w tablicy.
 - **4 odpowiedzi do wyboru.** Dobra odpowiedź podświetla się na zielono, zła na czerwono, a apka pokazuje poprawną.
 - **Wynik i seria.** Po rundzie widać wynik, najdłuższą serię i listę znaków do powtórki.
-- **Tablica znaków** z romaji dla obu pism.
+- **Tablica znaków** z romaji dla obu pism i ściągą z partykułami (は, を, に, へ, と, の, も, が, で).
+- **Tryb „Mylące się”**: tylko znaki, które łatwo pomylić (き/さ/ち, ね/れ/わ, シ/ツ, ソ/ン…), z ich sobowtórami jako złymi odpowiedziami.
 - **Dźwięki**, które można wyciszyć.
 - **Wersja polska i angielska.**
 - **Instalacja na telefonie (PWA) i tryb offline.**

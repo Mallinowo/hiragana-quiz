@@ -199,6 +199,16 @@ body{background:var(--bg);color:var(--ink)}
 .sheet li{counter-increment:s;display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);font-size:15px}
 .sheet li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center}
 .sheet b{font-weight:700}
+.pnote{font-size:13px;color:var(--mute);margin:-2px 0 12px}
+.pnote b{color:var(--acc)}
+.plist{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.pc{display:flex;gap:12px;align-items:center;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.pk{flex:none;width:46px;height:46px;border-radius:12px;background:rgba(200,55,45,.08);color:var(--acc);display:grid;place-items:center;font-size:28px}
+.pb{min-width:0}
+.pm{font-size:14px;color:var(--ink)}
+.pm b{color:var(--acc);font-weight:800}
+.pe{font-size:13px;color:var(--mute);margin-top:3px;display:flex;flex-wrap:wrap;gap:0 8px}
+.pe .kf{color:var(--ink);font-size:15px}
 .cc{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:456px;margin:0 auto;background:var(--surf2);border:1px solid var(--line);border-radius:18px;padding:16px;z-index:30;box-shadow:0 12px 40px -12px rgba(60,40,20,.35);animation:up .35s var(--ease) both}
 .cc p{margin:0 0 12px;font-size:13.5px;line-height:1.45;color:var(--mute)}
 .cc div{display:flex;gap:8px}
@@ -214,15 +224,15 @@ body{background:var(--bg);color:var(--ink)}
 <div id="app"></div>
 <div class="hint" id="hint"></div>
 <script>
-const BASE=[["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"],["か","ka"],["き","ki"],["く","ku"],["け","ke"],["こ","ko"],["さ","sa"],["し","shi"],["す","su"],["せ","se"],["そ","so"],["た","ta"],["ち","chi"],["つ","tsu"],["て","te"],["と","to"],["な","na"],["に","ni"],["ぬ","nu"],["ね","ne"],["の","no"],["は","ha"],["ひ","hi"],["ふ","fu"],["へ","he"],["ほ","ho"],["ま","ma"],["み","mi"],["む","mu"],["め","me"],["も","mo"],["や","ya"],["ゆ","yu"],["よ","yo"],["ら","ra"],["り","ri"],["る","ru"],["れ","re"],["ろ","ro"],["わ","wa"],["を","wo"],["ん","n"]];
+const BASE=[["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"],["か","ka"],["き","ki"],["く","ku"],["け","ke"],["こ","ko"],["さ","sa"],["し","shi"],["す","su"],["せ","se"],["そ","so"],["た","ta"],["ち","chi"],["つ","tsu"],["て","te"],["と","to"],["な","na"],["に","ni"],["ぬ","nu"],["ね","ne"],["の","no"],["は","ha"],["ひ","hi"],["ふ","fu"],["へ","he"],["ほ","ho"],["ま","ma"],["み","mi"],["む","mu"],["め","me"],["も","mo"],["や","ya"],["ゆ","yu"],["よ","yo"],["ら","ra"],["り","ri"],["る","ru"],["れ","re"],["ろ","ro"],["わ","wa"],["を","o"],["ん","n"]];
 const DAK=[["が","ga"],["ぎ","gi"],["ぐ","gu"],["げ","ge"],["ご","go"],["ざ","za"],["じ","ji"],["ず","zu"],["ぜ","ze"],["ぞ","zo"],["だ","da"],["で","de"],["ど","do"],["ば","ba"],["び","bi"],["ぶ","bu"],["べ","be"],["ぼ","bo"],["ぱ","pa"],["ぴ","pi"],["ぷ","pu"],["ぺ","pe"],["ぽ","po"]];
 const L={
 pl:{score:"wynik",streak:"seria",chart:"Tablica",quiz:"QUIZ",practice:"TRENING",basic:"Podstawowe",dak:"Dakuten",all:"Wszystko",rand:"Losowo",seq:"Trening po kolei",
-h2:k=>'Jak dobrze znasz <em>'+({hira:'hiraganę?',kata:'katakanę?',both:'hiraganę i katakanę?'})[k]+'</em>',sub:n=>`${n} ${n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?'znaki':'znaków'} · 4 odpowiedzi do wyboru`,start:"Start",chartLink:"Tablica znaków",both:"Obie",next:"Dalej",
+h2:k=>'Jak dobrze znasz <em>'+({hira:'hiraganę?',kata:'katakanę?',both:'hiraganę i katakanę?'})[k]+'</em>',sub:n=>`${n} ${n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?'znaki':'znaków'} · 4 odpowiedzi do wyboru`,start:"Start",chartLink:"Tablica znaków",both:"Obie",conf:"Mylące się",partT:"Partykuły",partBtn:"Partykuły ↓",partNote:"Jako partykuły: は czytamy <b>wa</b>, を czytamy <b>o</b>, へ czytamy <b>e</b>.",parts:[["は","wa","temat zdania – o kim/czym mowa","わたしは がくせいです","watashi wa gakusei desu","Jestem studentem."],["を","o","dopełnienie – co? kogo?","ほんを よみます","hon o yomimasu","Czytam książkę."],["に","ni","gdzie coś jest, dokąd, kiedy","うちに います","uchi ni imasu","Jestem w domu."],["へ","e","w stronę czegoś (kierunek)","やまへ いきます","yama e ikimasu","Idę w góry."],["と","to","z kimś; „i” między rzeczownikami","ははと いきます","haha to ikimasu","Idę z mamą."],["の","no","czyje? czego?","ははの ほん","haha no hon","książka mamy"],["も","mo","też, również","わたしも","watashi mo","ja też"],["が","ga","podmiot – kto? co? (np. przy すき, います)","ねこが います","neko ga imasu","Jest kot."],["で","de","gdzie coś się dzieje; czym","うちで よみます","uchi de yomimasu","Czytam w domu."]],next:"Dalej",
 great:"Świetnie!",good:"Dobrze idzie!",keep:"Jeszcze trochę ćwiczeń",of:n=>`z ${n}`,stats:(p,b)=>`${p}% · najdłuższa seria ×${b}`,flawless:"Bezbłędnie!",again:"Jeszcze raz",menu:"Menu",
 ovh:"Tablica znaków",close:"Zamknij",tb1:"Podstawowe",tb2:"Dakuten / handakuten",hint:"Klawisze 1–4 wybierają odpowiedź · Enter / spacja — dalej · Esc — menu",title:"Quiz z hiragany i katakany",back:"Wróć do menu",install:"Pobierz aplikację",ok:"Rozumiem",iosT:"Zainstaluj na iPhonie",iosP:"Apka trafi na ekran główny i będzie działać offline.",ios:["Stuknij <b>Udostępnij</b> na dolnym pasku Safari","Przewiń i wybierz <b>Do ekranu głównego</b>","Stuknij <b>Dodaj</b> w prawym górnym rogu"],andT:"Zainstaluj aplikację",andP:"Apka trafi na ekran główny i będzie działać offline.",and:["Otwórz menu przeglądarki <b>⋮</b>","Wybierz <b>Zainstaluj aplikację</b> albo <b>Dodaj do ekranu głównego</b>","Potwierdź <b>Zainstaluj</b>"]},
 en:{score:"score",streak:"streak",chart:"Chart",quiz:"QUIZ",practice:"PRACTICE",basic:"Basic",dak:"Dakuten",all:"All",rand:"Random",seq:"Practice in order",
-h2:k=>'How well do you know <em>'+({hira:'hiragana?',kata:'katakana?',both:'hiragana & katakana?'})[k]+'</em>',sub:n=>`${n} characters · 4 choices`,start:"Start",chartLink:"Kana chart",both:"Both",next:"Next",
+h2:k=>'How well do you know <em>'+({hira:'hiragana?',kata:'katakana?',both:'hiragana & katakana?'})[k]+'</em>',sub:n=>`${n} characters · 4 choices`,start:"Start",chartLink:"Kana chart",both:"Both",conf:"Look-alikes",partT:"Particles",partBtn:"Particles ↓",partNote:"As particles: は is read <b>wa</b>, を is read <b>o</b>, へ is read <b>e</b>.",parts:[["は","wa","topic – who/what we talk about","わたしは がくせいです","watashi wa gakusei desu","I am a student."],["を","o","object – what? whom?","ほんを よみます","hon o yomimasu","I read a book."],["に","ni","where something is, where to, when","うちに います","uchi ni imasu","I am at home."],["へ","e","towards (direction)","やまへ いきます","yama e ikimasu","I go to the mountains."],["と","to","with someone; “and” between nouns","ははと いきます","haha to ikimasu","I go with mom."],["の","no","whose? of what?","ははの ほん","haha no hon","mom's book"],["も","mo","also, too","わたしも","watashi mo","me too"],["が","ga","subject – who? what? (e.g. with すき, います)","ねこが います","neko ga imasu","There is a cat."],["で","de","where an action happens; with what","うちで よみます","uchi de yomimasu","I read at home."]],next:"Next",
 great:"Great job!",good:"Nice going!",keep:"Keep practicing",of:n=>`of ${n}`,stats:(p,b)=>`${p}% · best streak ×${b}`,flawless:"Flawless!",again:"Play again",menu:"Menu",
 ovh:"Kana chart",close:"Close",tb1:"Basic",tb2:"Dakuten / handakuten",hint:"Keys 1–4 pick an answer · Enter / space — next · Esc — menu",title:"Hiragana & Katakana quiz",back:"Back to menu",install:"Get the app",ok:"Got it",iosT:"Install on iPhone",iosP:"The app goes on your home screen and works offline.",ios:["Tap <b>Share</b> in Safari's bottom bar","Scroll and choose <b>Add to Home Screen</b>","Tap <b>Add</b> in the top right corner"],andT:"Install the app",andP:"The app goes on your home screen and works offline.",and:["Open the browser menu <b>⋮</b>","Choose <b>Install app</b> or <b>Add to Home screen</b>","Confirm with <b>Install</b>"]}};
 let lang="pl";try{const v=localStorage.getItem("hq-lang");if(v==="en"||v==="pl")lang=v;else if(!(navigator.language||"").startsWith("pl"))lang="en"}catch(e){}
@@ -252,8 +262,12 @@ let mode="base",order="rand",pool=[],queue=[],idx=0,score=0,streak=0,best=0,answ
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const toK=c=>c===" "?c:String.fromCharCode(c.charCodeAt(0)+96);
 const KBASE=BASE.map(x=>[toK(x[0]),x[1]]),KDAK=DAK.map(x=>[toK(x[0]),x[1]]);
-const setOf=(b,d)=>mode==="base"?b:mode==="dak"?d:b.concat(d);
-const getPool=()=>script==="hira"?setOf(BASE,DAK):script==="kata"?setOf(KBASE,KDAK):setOf(BASE,DAK).concat(setOf(KBASE,KDAK));
+const CONF_H=["きさち","ぬめ","ねれわ","るろ","うら","をとち","はほけ","まも","にこ","いり","しつ","あおめ","くへ","すむ","ねぬ","たな"];
+const CONF_K=["シツ","ソン","ノメ","クワウ","コユ","チテ","スヌ","フワ","アマ","ナメ","タク","ルレ","セサ","ヲフ","ロコ"];
+const confPool=g=>{const seen=new Set(),out=[];g.forEach(x=>[...x].forEach(c=>{if(!seen.has(c)){seen.add(c);out.push([c,RM[c]])}}));return out};
+const confMates=c=>{const out=[];CONF_H.concat(CONF_K).forEach(x=>{if(x.includes(c))[...x].forEach(m=>{if(m!==c&&!out.includes(m))out.push(m)})});return out};
+const setOf=(b,d,g)=>mode==="base"?b:mode==="dak"?d:mode==="conf"?confPool(g):b.concat(d);
+const getPool=()=>script==="hira"?setOf(BASE,DAK,CONF_H):script==="kata"?setOf(KBASE,KDAK,CONF_K):setOf(BASE,DAK,CONF_H).concat(setOf(KBASE,KDAK,CONF_K));
 const bigLabel=()=>script==="kata"?"カタカナ":script==="both"?"かなカナ":"ひらがな";
 const wmFirst=()=>script==="kata"?"ア":"あ";
 function setWm(c){wm.textContent=c;wm.style.animation="none";void wm.offsetWidth;wm.style.animation=""}
@@ -263,7 +277,7 @@ function render(){
   clearTimeout(timer);
   if(idx>=queue.length)return end();
   cur=queue[idx];answered=false;setWm(cur[0]);
-  const seen=new Set([cur[1]]);const others=shuffle(pool).filter(p=>!seen.has(p[1])&&seen.add(p[1])).slice(0,3);
+  const seen=new Set([cur[1]]);const mates=mode==="conf"?shuffle(confMates(cur[0])).map(c=>[c,RM[c]]):[];const others=mates.concat(shuffle(pool)).filter(p=>!seen.has(p[1])&&seen.add(p[1])).slice(0,3);
   const opts=shuffle([cur].concat(others));
   app.className="";
   app.innerHTML=`${topBar()}
@@ -286,7 +300,7 @@ function pick(btn){
 function next(){if(!answered)return;answered=false;clearTimeout(timer);app.classList.add("leave");timer=setTimeout(()=>{idx++;render()},220)}
 function modeChips(){
   const scr=[["hira","Hiragana"],["kata","Katakana"],["both",T("both")]].map(x=>`<button class="chip ${script===x[0]?"on":""}" data-s="${x[0]}">${x[1]}</button>`).join("");
-  const sets=[["base",T("basic")],["dak",T("dak")],["all",T("all")]].map(m=>`<button class="chip ${mode===m[0]?"on":""}" data-m="${m[0]}">${m[1]}</button>`).join("");
+  const sets=[["base",T("basic")],["dak",T("dak")],["all",T("all")],["conf",T("conf")]].map(m=>`<button class="chip ${mode===m[0]?"on":""}" data-m="${m[0]}">${m[1]}</button>`).join("");
   const ord=[["rand",T("rand")],["seq",T("seq")]].map(o=>`<button class="chip ${order===o[0]?"on":""}" data-o="${o[0]}">${o[1]}</button>`).join("");
   return`<div class="chips">${scr}</div><div class="chips">${sets}</div><div class="chips">${ord}</div>`;
 }
@@ -323,7 +337,8 @@ function tbl(rows){
   return`<table class="tb">${head}${rows.map(r=>`<tr><th>${r[0]}</th>${[...r[1]].map(c=>c===" "?'<td class="e"></td>':`<td class="kf">${c}<small>${RM[c]}</small></td>`).join("")}</tr>`).join("")}</table>`;
 }
 const kRows=rows=>rows.map(r=>[r[0],[...r[1]].map(toK).join("")]);
-function buildTable(){const part=(n,a,b)=>`<h2>${n} · ${T("tb1")}</h2>`+tbl(a)+`<h2>${n} · ${T("tb2")}</h2>`+tbl(b);let h="";if(script!=="kata")h+=part("Hiragana",ROWS,ROWS2);if(script!=="hira")h+=part("Katakana",kRows(ROWS),kRows(ROWS2));document.getElementById("ovbody").innerHTML=h}
+function partsHtml(){return`<h2 id="parts">${T("partT")}</h2><p class="pnote">${T("partNote")}</p><div class="plist">${T("parts").map(x=>`<div class="pc"><div class="pk kf">${x[0]}</div><div class="pb"><div class="pm"><b>${x[1]}</b> · ${x[2]}</div><div class="pe"><span class="kf">${x[3]}</span><i>${x[4]}</i><span>${x[5]}</span></div></div></div>`).join("")}</div>`}
+function buildTable(){const part=(n,a,b)=>`<h2>${n} · ${T("tb1")}</h2>`+tbl(a)+`<h2>${n} · ${T("tb2")}</h2>`+tbl(b);let h="";if(script!=="kata")h+=part("Hiragana",ROWS,ROWS2);if(script!=="hira")h+=part("Katakana",kRows(ROWS),kRows(ROWS2));document.getElementById("ovbody").innerHTML=`<div class="chips" style="justify-content:flex-start;margin:0 0 10px"><button class="chip" id="gopart">${T("partBtn")}</button></div>`+h+partsHtml();document.getElementById("gopart").onclick=()=>document.getElementById("parts").scrollIntoView({behavior:"smooth"})}
 const ov=document.getElementById("ov"),closeOv=()=>ov.classList.remove("on");
 document.getElementById("ovx").onclick=closeOv;
 document.addEventListener("click",e=>{if(e.target.closest("[data-t]")){buildTable();ov.classList.add("on");ov.scrollTop=0}else if(e.target.closest("#back"))intro()});
