@@ -35,7 +35,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,
 @keyframes wm{from{opacity:0}}
 @keyframes drift{to{transform:translate(-3vh,-2vh) rotate(2deg)}}
 .grain{position:absolute;inset:0;opacity:.06;background-image:radial-gradient(rgba(255,255,255,.6) .6px,transparent .6px);background-size:3px 3px}
-#app{position:relative;height:100%;max-width:480px;margin:0 auto;padding:calc(22px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) calc(26px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));display:flex;flex-direction:column}
+#app{position:relative;height:100%;max-width:480px;margin:0 auto;padding:calc(22px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) calc(26px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .back{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surf);color:var(--ink);font:inherit;font-size:20px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0 0 2px;transition:background .2s}
 .back:hover{background:var(--surf2)}
@@ -103,7 +103,7 @@ button.pill{cursor:pointer;font:inherit;font-size:13px;font-weight:600}
 @keyframes leave{to{opacity:0;transform:translateX(-28px)}}
 .leave .orb{animation-name:leaveO}
 @keyframes leaveO{to{opacity:0;transform:scale(.9)}}
-.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hero{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .hero .big{font-size:min(22vw,104px);line-height:1.05;position:relative}
 .hero .big span{display:inline-block;animation:rise .6s var(--ease) both}
 @keyframes rise{from{opacity:0;transform:translateY(30px) rotate(-6deg)}}
@@ -229,6 +229,12 @@ body{background:var(--bg);color:var(--ink)}
 .rform input:disabled{opacity:.6}
 .rform .btn{width:auto;padding:0 22px;flex:none}
 .rerr{min-height:22px;font-size:13px;color:var(--wrong);margin-top:6px;padding-left:4px}
+.miss span.ml{flex-direction:column;align-items:flex-start;gap:2px;width:100%;text-align:left;padding:9px 12px}
+.miss span.ml b{font-size:17px;line-height:1.4}
+.miss span.ml i{font-style:normal;font-size:13px}
+body.atend .hint{display:none}
+.hero.end{padding-bottom:22px}
+.end .foot2,.hero.end+.foot2{flex:none}
 .cc{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:456px;margin:0 auto;background:var(--surf2);border:1px solid var(--line);border-radius:18px;padding:16px;z-index:30;box-shadow:0 12px 40px -12px rgba(60,40,20,.35);animation:up .35s var(--ease) both}
 .cc p{margin:0 0 12px;font-size:13.5px;line-height:1.45;color:var(--mute)}
 .cc div{display:flex;gap:8px}
@@ -333,7 +339,7 @@ function setWm(c){wm.textContent=c;wm.style.animation="none";void wm.offsetWidth
 function topBar(){return`<div class="top"><div class="lft"><button class="back" id="back" title="${T("back")}" aria-label="${T("back")}">‹</button><div class="logo"><i></i><span>${bigLabel()}</span></div></div><div class="pills"><div class="pill" id="sc">${T("score")} <b>${score}</b></div><div class="pill ${streak>=3?"hot":""}" id="st">${T("streak")} <b>×${streak}</b></div><button class="pill" data-t="1">${T("chart")}</button></div></div>`}
 function start(){track("quiz_start",{script,mode,order,lang});pool=order==="read"?readPool():getPool();queue=order==="seq"?pool.slice():shuffle(pool);idx=0;score=0;streak=0;best=0;wrong=[];render()}
 function render(){
-  clearTimeout(timer);
+  document.body.classList.remove("atend");clearTimeout(timer);
   if(idx>=queue.length)return end();
   if(order==="read")return renderRead();
   cur=queue[idx];answered=false;setWm(cur[0]);
@@ -439,6 +445,7 @@ function modeChips(){
 }
 function bindModes(){app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{if(c.dataset.s){script=c.dataset.s;try{localStorage.setItem("hq-script",script)}catch(e){}if(document.getElementById("go")){intro();return}}else if(c.dataset.m)mode=c.dataset.m;else order=c.dataset.o;app.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.s?x.dataset.s===script:x.dataset.m?x.dataset.m===mode:x.dataset.o===order));const p=document.getElementById("sub");if(p)p.textContent=subText()})}
 function intro(){
+  document.body.classList.remove("atend");
   clearTimeout(timer);app.className="";setWm(wmFirst());
   app.innerHTML=`<div class="top" style="justify-content:flex-end"><div class="topr"><button class="snd" id="snd" aria-label="sound">${sndOn?SND_ON:SND_OFF}</button><div class="lang"><button data-l="pl" class="${lang==="pl"?"on":""}">PL</button><button data-l="en" class="${lang==="en"?"on":""}">EN</button></div></div></div><div class="hero"><div class="big kf">${[...bigLabel()].map((c,i)=>`<span style="animation-delay:${i*.07}s">${c}</span>`).join("")}</div>
   <h2>${T("h2")(script)}</h2><p id="sub">${subText()}</p>
@@ -450,11 +457,11 @@ function intro(){
   bindModes();document.getElementById("go").onclick=start;
 }
 function end(){
-  clearTimeout(timer);app.className="";setWm(script==="kata"?"ン":"ん");
+  document.body.classList.add("atend");clearTimeout(timer);app.className="";setWm(script==="kata"?"ン":"ん");
   const pct=Math.round(score/queue.length*100);
   app.innerHTML=`${topBar()}<div class="hero end"><div class="ring"><svg viewBox="0 0 100 100"><circle class="bgc" cx="50" cy="50" r="44" pathLength="100"/><circle class="fg" id="fg" cx="50" cy="50" r="44" pathLength="100" style="stroke-dashoffset:100"/></svg><div class="c"><b id="big">0</b><span>${T("of")(queue.length)}</span></div></div>
   <h2>${pct>=90?T("great"):pct>=60?T("good"):T("keep")}</h2><p>${T("stats")(pct,best)}</p>
-  ${wrong.length?`<div class="miss">${wrong.map(w=>`<span><b class="kf">${w[0]}</b>${w[1]}</span>`).join("")}</div>`:`<p style="margin-top:12px">${T("flawless")}</p>`}
+  ${wrong.length?`<div class="miss">${wrong.map(w=>[...w[0]].length>6?`<span class="ml"><b class="kf">${w[0]}</b><i>${w[1]}</i></span>`:`<span><b class="kf">${w[0]}</b>${w[1]}</span>`).join("")}</div>`:`<p style="margin-top:12px">${T("flawless")}</p>`}
   <div class="setup chips a" style="flex-direction:column;gap:0;margin-top:22px">${modeChips()}</div></div>
   <div class="foot2"><button class="btn" id="again">${T("again")}</button><button class="link" id="menu">${T("menu")}</button></div>`;
   sfx("end");track("quiz_finish",{script,score,total:queue.length,pct,mode,order});
