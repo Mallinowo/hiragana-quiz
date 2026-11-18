@@ -263,6 +263,8 @@ body.atend .hint{display:none}
 .optc.on{border-color:var(--acc);background:rgba(200,55,45,.06)}
 .optc.on .oc-r{border:6px solid var(--acc)}
 .setupw .lbl:first-child{margin-top:8px}
+.menu .big.still span{animation:none}
+.optc .oc-r{transition:border-width .15s}
 .stitle{font-weight:800;font-size:18px;letter-spacing:-.01em}
 .cc{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:456px;margin:0 auto;background:var(--surf2);border:1px solid var(--line);border-radius:18px;padding:16px;z-index:30;box-shadow:0 12px 40px -12px rgba(60,40,20,.35);animation:up .35s var(--ease) both}
 .cc p{margin:0 0 12px;font-size:13.5px;line-height:1.45;color:var(--mute)}
@@ -887,16 +889,26 @@ function modeChips(){
 }
 function bindModes(){app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{if(c.dataset.s){script=c.dataset.s;try{localStorage.setItem("hq-script",script)}catch(e){}if(document.getElementById("go")){intro();return}}else if(c.dataset.m)mode=c.dataset.m;else order=c.dataset.o;app.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.s?x.dataset.s===script:x.dataset.m?x.dataset.m===mode:x.dataset.o===order));const p=document.getElementById("sub");if(p)p.textContent=subText()})}
 function scriptSeg(){return`<div class="seg">${[["hira","Hiragana"],["kata","Katakana"],["both",T("both")]].map(x=>`<button class="${script===x[0]?"on":""}" data-s="${x[0]}">${x[1]}</button>`).join("")}</div>`}
-function bindScript(after){app.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{script=b.dataset.s;try{localStorage.setItem("hq-script",script)}catch(e){}after()})}
+function bindScript(after){app.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{if(script===b.dataset.s)return;script=b.dataset.s;try{localStorage.setItem("hq-script",script)}catch(e){}app.querySelectorAll("[data-s]").forEach(x=>x.classList.toggle("on",x===b));wm.textContent=wmFirst();after()})}
 const kv=x=>script==="kata"?toKs(x):x;
 const poolN=md=>{const m0=mode;mode=md;const n=getPool().length;mode=m0;return n};
+function actList(){return[["chars",kv("あ"),T("act1"),T("act1d"),T("cnt")(poolN("all"))],["read",kv("よむ"),T("act2"),T("act2d"),T("rcnt")(readPool().length)],["conf",kv("さき"),T("act3"),T("act3d"),T("cnt")(poolN("conf"))]]}
+function refreshIntro(){
+  const bl=document.getElementById("bigL");if(bl){bl.classList.add("still");bl.innerHTML=[...bigLabel()].map(c=>`<span>${c}</span>`).join("")}
+  const h=document.getElementById("menuH");if(h)h.innerHTML=T("h2")(script);
+  actList().forEach(a=>{const b=app.querySelector(`[data-a="${a[0]}"]`);if(!b)return;b.querySelector(".ai").textContent=a[1];b.querySelector(".an").textContent=a[4]});
+}
+function refreshSetup(){
+  const ks={base:"あいう",dak:"がざだ",yoon:"きゃしゅ",all:"あがきゃ"};
+  app.querySelectorAll(".optc").forEach(b=>{const m=b.dataset.m;b.querySelector(".oc-k").textContent=kv(ks[m]);b.querySelector(".oc-t small").textContent=T("cnt")(poolN(m))});
+}
 function intro(){
   document.body.classList.remove("atend");
   clearTimeout(timer);app.className="";setWm(wmFirst());
-  const acts=[["chars",kv("あ"),T("act1"),T("act1d"),T("cnt")(poolN("all"))],["read",kv("よむ"),T("act2"),T("act2d"),T("rcnt")(readPool().length)],["conf",kv("さき"),T("act3"),T("act3d"),T("cnt")(poolN("conf"))]];
+  const acts=actList();
   app.innerHTML=`<div class="top" style="justify-content:flex-end"><div class="topr"><button class="snd" id="snd" aria-label="sound">${sndOn?SND_ON:SND_OFF}</button><div class="lang"><button data-l="pl" class="${lang==="pl"?"on":""}">PL</button><button data-l="en" class="${lang==="en"?"on":""}">EN</button></div></div></div>
-  <div class="menu"><div class="big kf">${[...bigLabel()].map((c,i)=>`<span style="animation-delay:${i*.07}s">${c}</span>`).join("")}</div>
-  <h2>${T("h2")(script)}</h2>
+  <div class="menu"><div class="big kf" id="bigL">${[...bigLabel()].map((c,i)=>`<span style="animation-delay:${i*.07}s">${c}</span>`).join("")}</div>
+  <h2 id="menuH">${T("h2")(script)}</h2>
   ${scriptSeg()}
   <div class="lbl">${T("pickT")}</div>
   <div class="acts">${acts.map(a=>`<button class="act" data-a="${a[0]}"><span class="ai kf">${a[1]}</span><span class="at"><b>${a[2]}</b><small>${a[3]}</small></span><span class="an">${a[4]}</span></button>`).join("")}</div></div>
@@ -904,7 +916,7 @@ function intro(){
   app.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>setLang(b.dataset.l));
   document.getElementById("inst").onclick=install;updInst();
   document.getElementById("snd").onclick=e=>{sndOn=!sndOn;try{localStorage.setItem("hq-snd",sndOn?"1":"0")}catch(_){}e.currentTarget.innerHTML=sndOn?SND_ON:SND_OFF;if(sndOn)sfx("ok")};
-  bindScript(intro);
+  bindScript(refreshIntro);
   app.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{const a=b.dataset.a;
     if(a==="chars"){if(mode==="conf")mode="base";if(order==="read")order="rand";setup()}
     else if(a==="read"){order="read";start()}
@@ -922,8 +934,8 @@ function setup(){
   <div class="seg">${[["rand",T("rand")],["seq",T("seqShort")]].map(x=>`<button class="${order===x[0]?"on":""}" data-o="${x[0]}">${x[1]}</button>`).join("")}</div></div>
   <div class="foot2"><button class="btn" id="go">${T("start")}</button></div>`;
   document.getElementById("sback").onclick=intro;
-  bindScript(setup);
-  app.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{mode=b.dataset.m;setup()});
+  bindScript(refreshSetup);
+  app.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{mode=b.dataset.m;app.querySelectorAll("[data-m]").forEach(x=>x.classList.toggle("on",x===b))});
   app.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{order=b.dataset.o;app.querySelectorAll("[data-o]").forEach(x=>x.classList.toggle("on",x===b))});
   document.getElementById("go").onclick=start;
 }
