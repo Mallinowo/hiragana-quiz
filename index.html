@@ -199,7 +199,8 @@ body{background:var(--bg);color:var(--ink)}
 .sheet li{counter-increment:s;display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);font-size:15px}
 .sheet li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center}
 .sheet b{font-weight:700}
-.pnote{font-size:13px;color:var(--mute);margin:-2px 0 12px}
+.pnote{font-size:13px;color:var(--mute);margin:6px 0 12px}
+.tvs{justify-content:flex-start;margin:0 0 14px;position:sticky;top:34px;z-index:2;background:rgba(243,238,227,.98);padding:6px 0}
 .pnote b{color:var(--acc)}
 .plist{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
 .pc{display:flex;gap:12px;align-items:center;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
@@ -337,11 +338,19 @@ function tbl(rows){
   return`<table class="tb">${head}${rows.map(r=>`<tr><th>${r[0]}</th>${[...r[1]].map(c=>c===" "?'<td class="e"></td>':`<td class="kf">${c}<small>${RM[c]}</small></td>`).join("")}</tr>`).join("")}</table>`;
 }
 const kRows=rows=>rows.map(r=>[r[0],[...r[1]].map(toK).join("")]);
-function partsHtml(){return`<h2 id="parts">${T("partT")}</h2><p class="pnote">${T("partNote")}</p><div class="plist">${T("parts").map(x=>`<div class="pc"><div class="pk kf">${x[0]}</div><div class="pb"><div class="pm"><b>${x[1]}</b> · ${x[2]}</div><div class="pe"><span class="kf">${x[3]}</span><i>${x[4]}</i><span>${x[5]}</span></div></div></div>`).join("")}</div>`}
-function buildTable(){const part=(n,a,b)=>`<h2>${n} · ${T("tb1")}</h2>`+tbl(a)+`<h2>${n} · ${T("tb2")}</h2>`+tbl(b);let h="";if(script!=="kata")h+=part("Hiragana",ROWS,ROWS2);if(script!=="hira")h+=part("Katakana",kRows(ROWS),kRows(ROWS2));document.getElementById("ovbody").innerHTML=`<div class="chips" style="justify-content:flex-start;margin:0 0 10px"><button class="chip" id="gopart">${T("partBtn")}</button></div>`+h+partsHtml();document.getElementById("gopart").onclick=()=>document.getElementById("parts").scrollIntoView({behavior:"smooth"})}
+function partsHtml(){return`<p class="pnote">${T("partNote")}</p><div class="plist">${T("parts").map(x=>`<div class="pc"><div class="pk kf">${x[0]}</div><div class="pb"><div class="pm"><b>${x[1]}</b> · ${x[2]}</div><div class="pe"><span class="kf">${x[3]}</span><i>${x[4]}</i><span>${x[5]}</span></div></div></div>`).join("")}</div>`}
+let tview=null;
+function buildTable(){
+  if(!tview)tview=script==="kata"?"kata":"hira";
+  const part=(a,b)=>`<h2>${T("tb1")}</h2>`+tbl(a)+`<h2>${T("tb2")}</h2>`+tbl(b);
+  const body=tview==="hira"?part(ROWS,ROWS2):tview==="kata"?part(kRows(ROWS),kRows(ROWS2)):partsHtml();
+  const tabs=[["hira","Hiragana"],["kata","Katakana"],["parts",T("partT")]].map(x=>`<button class="chip ${tview===x[0]?"on":""}" data-tv="${x[0]}">${x[1]}</button>`).join("");
+  document.getElementById("ovbody").innerHTML=`<div class="chips tvs">${tabs}</div>`+body;
+  document.querySelectorAll("[data-tv]").forEach(b=>b.onclick=()=>{tview=b.dataset.tv;buildTable();document.getElementById("ov").scrollTop=0});
+}
 const ov=document.getElementById("ov"),closeOv=()=>ov.classList.remove("on");
 document.getElementById("ovx").onclick=closeOv;
-document.addEventListener("click",e=>{if(e.target.closest("[data-t]")){buildTable();ov.classList.add("on");ov.scrollTop=0}else if(e.target.closest("#back"))intro()});
+document.addEventListener("click",e=>{if(e.target.closest("[data-t]")){tview=null;buildTable();ov.classList.add("on");ov.scrollTop=0}else if(e.target.closest("#back"))intro()});
 document.addEventListener("keydown",e=>{
   if(sheet.classList.contains("on")){if(e.key==="Escape")closeSheet();return}
   if(ov.classList.contains("on")){if(e.key==="Escape")closeOv();return}
