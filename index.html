@@ -210,6 +210,24 @@ body{background:var(--bg);color:var(--ink)}
 .pm b{color:var(--acc);font-weight:800}
 .pe{font-size:13px;color:var(--mute);margin-top:3px;display:flex;flex-wrap:wrap;gap:0 8px}
 .pe .kf{color:var(--ink);font-size:15px}
+.rcard{width:100%;background:var(--surf);border:1.5px solid var(--line);border-radius:24px;padding:30px 18px 24px;text-align:center;box-shadow:0 10px 24px -16px rgba(60,40,20,.35);animation:orbIn .5s var(--ease) both;transition:border-color .2s}
+.rk{font-size:min(15vw,64px);line-height:1.35;animation:stamp .45s var(--ease) both;word-break:keep-all}
+.rk.long{font-size:min(7.4vw,30px);line-height:1.6}
+.rcard.ok{border-color:var(--good);box-shadow:0 0 0 4px rgba(47,143,84,.12)}
+.rcard.bad{border-color:var(--wrong);box-shadow:0 0 0 4px rgba(200,55,45,.1);animation:shake .4s ease}
+.rt{display:flex;flex-direction:column;gap:3px;margin-top:10px;font-size:15px;color:var(--mute)}
+.rt:empty{display:none}
+.rt b{font-size:20px;font-weight:700;color:var(--ink);letter-spacing:.01em}
+.rcard.ok .rt b{color:var(--good)}
+.ry{font-size:13px;margin-top:4px}
+.ry s{color:var(--wrong)}
+.rn{font-size:13px;margin-top:6px;color:var(--acc);font-weight:600}
+.rform{display:flex;gap:10px;margin-top:6px}
+.rform input{flex:1;min-width:0;height:58px;border-radius:18px;border:1.5px solid var(--line);background:var(--surf2);font:inherit;font-size:20px;font-weight:600;padding:0 16px;color:var(--ink);-webkit-appearance:none}
+.rform input:focus{outline:none;border-color:var(--acc)}
+.rform input:disabled{opacity:.6}
+.rform .btn{width:auto;padding:0 22px;flex:none}
+.rerr{min-height:22px;font-size:13px;color:var(--wrong);margin-top:6px;padding-left:4px}
 .cc{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:456px;margin:0 auto;background:var(--surf2);border:1px solid var(--line);border-radius:18px;padding:16px;z-index:30;box-shadow:0 12px 40px -12px rgba(60,40,20,.35);animation:up .35s var(--ease) both}
 .cc p{margin:0 0 12px;font-size:13.5px;line-height:1.45;color:var(--mute)}
 .cc div{display:flex;gap:8px}
@@ -229,11 +247,11 @@ const BASE=[["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"],["か","
 const DAK=[["が","ga"],["ぎ","gi"],["ぐ","gu"],["げ","ge"],["ご","go"],["ざ","za"],["じ","ji"],["ず","zu"],["ぜ","ze"],["ぞ","zo"],["だ","da"],["で","de"],["ど","do"],["ば","ba"],["び","bi"],["ぶ","bu"],["べ","be"],["ぼ","bo"],["ぱ","pa"],["ぴ","pi"],["ぷ","pu"],["ぺ","pe"],["ぽ","po"]];
 const L={
 pl:{score:"wynik",streak:"seria",chart:"Tablica",quiz:"QUIZ",practice:"TRENING",basic:"Podstawowe",dak:"Dakuten",all:"Wszystko",rand:"Losowo",seq:"Trening po kolei",
-h2:k=>'Jak dobrze znasz <em>'+({hira:'hiraganę?',kata:'katakanę?',both:'hiraganę i katakanę?'})[k]+'</em>',sub:n=>`${n} ${n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?'znaki':'znaków'} · 4 odpowiedzi do wyboru`,start:"Start",chartLink:"Tablica znaków",both:"Obie",conf:"Mylące się",partT:"Partykuły",partBtn:"Partykuły ↓",partNote:"Jako partykuły: は czytamy <b>wa</b>, を czytamy <b>o</b>, へ czytamy <b>e</b>.",parts:[["は","wa","temat zdania – o kim/czym mowa","わたしは がくせいです","watashi wa gakusei desu","Jestem studentem."],["を","o","dopełnienie – co? kogo?","ほんを よみます","hon o yomimasu","Czytam książkę."],["に","ni","gdzie coś jest, dokąd, kiedy","うちに います","uchi ni imasu","Jestem w domu."],["へ","e","w stronę czegoś (kierunek)","やまへ いきます","yama e ikimasu","Idę w góry."],["と","to","z kimś; „i” między rzeczownikami","ははと いきます","haha to ikimasu","Idę z mamą."],["の","no","czyje? czego?","ははの ほん","haha no hon","książka mamy"],["も","mo","też, również","わたしも","watashi mo","ja też"],["が","ga","podmiot – kto? co? (np. przy すき, います)","ねこが います","neko ga imasu","Jest kot."],["で","de","gdzie coś się dzieje; czym","うちで よみます","uchi de yomimasu","Czytam w domu."]],next:"Dalej",
+h2:k=>'Jak dobrze znasz <em>'+({hira:'hiraganę?',kata:'katakanę?',both:'hiraganę i katakanę?'})[k]+'</em>',sub:n=>`${n} ${n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?'znaki':'znaków'} · 4 odpowiedzi do wyboru`,start:"Start",chartLink:"Tablica znaków",both:"Obie",readM:"Czytanie",readT:"CZYTANIE",readSub:n=>`${n} słów i zdań · wpisz romaji`,check:"Sprawdź",readPh:"wpisz romaji…",readEmpty:"Wpisz odpowiedź",readYour:"Twoja odpowiedź",readAlmost:(k,r)=>`Zaliczone, ale jako partykuła ${k} czytamy „${r}”.`,conf:"Mylące się",partT:"Partykuły",partBtn:"Partykuły ↓",partNote:"Jako partykuły: は czytamy <b>wa</b>, を czytamy <b>o</b>, へ czytamy <b>e</b>.",parts:[["は","wa","temat zdania – o kim/czym mowa","わたしは がくせいです","watashi wa gakusei desu","Jestem studentem."],["を","o","dopełnienie – co? kogo?","ほんを よみます","hon o yomimasu","Czytam książkę."],["に","ni","gdzie coś jest, dokąd, kiedy","うちに います","uchi ni imasu","Jestem w domu."],["へ","e","w stronę czegoś (kierunek)","やまへ いきます","yama e ikimasu","Idę w góry."],["と","to","z kimś; „i” między rzeczownikami","ははと いきます","haha to ikimasu","Idę z mamą."],["の","no","czyje? czego?","ははの ほん","haha no hon","książka mamy"],["も","mo","też, również","わたしも","watashi mo","ja też"],["が","ga","podmiot – kto? co? (np. przy すき, います)","ねこが います","neko ga imasu","Jest kot."],["で","de","gdzie coś się dzieje; czym","うちで よみます","uchi de yomimasu","Czytam w domu."]],next:"Dalej",
 great:"Świetnie!",good:"Dobrze idzie!",keep:"Jeszcze trochę ćwiczeń",of:n=>`z ${n}`,stats:(p,b)=>`${p}% · najdłuższa seria ×${b}`,flawless:"Bezbłędnie!",again:"Jeszcze raz",menu:"Menu",
 ovh:"Tablica znaków",close:"Zamknij",tb1:"Podstawowe",tb2:"Dakuten / handakuten",hint:"Klawisze 1–4 wybierają odpowiedź · Enter / spacja — dalej · Esc — menu",title:"Quiz z hiragany i katakany",back:"Wróć do menu",install:"Pobierz aplikację",ok:"Rozumiem",iosT:"Zainstaluj na iPhonie",iosP:"Apka trafi na ekran główny i będzie działać offline.",ios:["Stuknij <b>Udostępnij</b> na dolnym pasku Safari","Przewiń i wybierz <b>Do ekranu głównego</b>","Stuknij <b>Dodaj</b> w prawym górnym rogu"],andT:"Zainstaluj aplikację",andP:"Apka trafi na ekran główny i będzie działać offline.",and:["Otwórz menu przeglądarki <b>⋮</b>","Wybierz <b>Zainstaluj aplikację</b> albo <b>Dodaj do ekranu głównego</b>","Potwierdź <b>Zainstaluj</b>"]},
 en:{score:"score",streak:"streak",chart:"Chart",quiz:"QUIZ",practice:"PRACTICE",basic:"Basic",dak:"Dakuten",all:"All",rand:"Random",seq:"Practice in order",
-h2:k=>'How well do you know <em>'+({hira:'hiragana?',kata:'katakana?',both:'hiragana & katakana?'})[k]+'</em>',sub:n=>`${n} characters · 4 choices`,start:"Start",chartLink:"Kana chart",both:"Both",conf:"Look-alikes",partT:"Particles",partBtn:"Particles ↓",partNote:"As particles: は is read <b>wa</b>, を is read <b>o</b>, へ is read <b>e</b>.",parts:[["は","wa","topic – who/what we talk about","わたしは がくせいです","watashi wa gakusei desu","I am a student."],["を","o","object – what? whom?","ほんを よみます","hon o yomimasu","I read a book."],["に","ni","where something is, where to, when","うちに います","uchi ni imasu","I am at home."],["へ","e","towards (direction)","やまへ いきます","yama e ikimasu","I go to the mountains."],["と","to","with someone; “and” between nouns","ははと いきます","haha to ikimasu","I go with mom."],["の","no","whose? of what?","ははの ほん","haha no hon","mom's book"],["も","mo","also, too","わたしも","watashi mo","me too"],["が","ga","subject – who? what? (e.g. with すき, います)","ねこが います","neko ga imasu","There is a cat."],["で","de","where an action happens; with what","うちで よみます","uchi de yomimasu","I read at home."]],next:"Next",
+h2:k=>'How well do you know <em>'+({hira:'hiragana?',kata:'katakana?',both:'hiragana & katakana?'})[k]+'</em>',sub:n=>`${n} characters · 4 choices`,start:"Start",chartLink:"Kana chart",both:"Both",readM:"Reading",readT:"READING",readSub:n=>`${n} words and sentences · type romaji`,check:"Check",readPh:"type romaji…",readEmpty:"Type an answer first",readYour:"Your answer",readAlmost:(k,r)=>`Accepted, but as a particle ${k} is read “${r}”.`,conf:"Look-alikes",partT:"Particles",partBtn:"Particles ↓",partNote:"As particles: は is read <b>wa</b>, を is read <b>o</b>, へ is read <b>e</b>.",parts:[["は","wa","topic – who/what we talk about","わたしは がくせいです","watashi wa gakusei desu","I am a student."],["を","o","object – what? whom?","ほんを よみます","hon o yomimasu","I read a book."],["に","ni","where something is, where to, when","うちに います","uchi ni imasu","I am at home."],["へ","e","towards (direction)","やまへ いきます","yama e ikimasu","I go to the mountains."],["と","to","with someone; “and” between nouns","ははと いきます","haha to ikimasu","I go with mom."],["の","no","whose? of what?","ははの ほん","haha no hon","mom's book"],["も","mo","also, too","わたしも","watashi mo","me too"],["が","ga","subject – who? what? (e.g. with すき, います)","ねこが います","neko ga imasu","There is a cat."],["で","de","where an action happens; with what","うちで よみます","uchi de yomimasu","I read at home."]],next:"Next",
 great:"Great job!",good:"Nice going!",keep:"Keep practicing",of:n=>`of ${n}`,stats:(p,b)=>`${p}% · best streak ×${b}`,flawless:"Flawless!",again:"Play again",menu:"Menu",
 ovh:"Kana chart",close:"Close",tb1:"Basic",tb2:"Dakuten / handakuten",hint:"Keys 1–4 pick an answer · Enter / space — next · Esc — menu",title:"Hiragana & Katakana quiz",back:"Back to menu",install:"Get the app",ok:"Got it",iosT:"Install on iPhone",iosP:"The app goes on your home screen and works offline.",ios:["Tap <b>Share</b> in Safari's bottom bar","Scroll and choose <b>Add to Home Screen</b>","Tap <b>Add</b> in the top right corner"],andT:"Install the app",andP:"The app goes on your home screen and works offline.",and:["Open the browser menu <b>⋮</b>","Choose <b>Install app</b> or <b>Add to Home screen</b>","Confirm with <b>Install</b>"]}};
 let lang="pl";try{const v=localStorage.getItem("hq-lang");if(v==="en"||v==="pl")lang=v;else if(!(navigator.language||"").startsWith("pl"))lang="en"}catch(e){}
@@ -269,14 +287,54 @@ const confPool=g=>{const seen=new Set(),out=[];g.forEach(x=>[...x].forEach(c=>{i
 const confMates=c=>{const out=[];CONF_H.concat(CONF_K).forEach(x=>{if(x.includes(c))[...x].forEach(m=>{if(m!==c&&!out.includes(m))out.push(m)})});return out};
 const setOf=(b,d,g)=>mode==="base"?b:mode==="dak"?d:mode==="conf"?confPool(g):b.concat(d);
 const getPool=()=>script==="hira"?setOf(BASE,DAK,CONF_H):script==="kata"?setOf(KBASE,KDAK,CONF_K):setOf(BASE,DAK,CONF_H).concat(setOf(KBASE,KDAK,CONF_K));
+
+const READ_H=[
+["ねこ",["neko"],"kot","cat"],["いぬ",["inu"],"pies","dog"],["さかな",["sakana"],"ryba","fish"],["やま",["yama"],"góra","mountain"],
+["うみ",["umi"],"morze","sea"],["そら",["sora"],"niebo","sky"],["ほし",["hoshi"],"gwiazda","star"],["つき",["tsuki"],"księżyc","moon"],
+["はな",["hana"],"kwiat","flower"],["あめ",["ame"],"deszcz","rain"],["ゆき",["yuki"],"śnieg","snow"],["くるま",["kuruma"],"samochód","car"],
+["ほん",["hon"],"książka","book"],["いえ",["ie"],"dom","house"],["みち",["michi"],"droga","road"],["かわ",["kawa"],"rzeka","river"],
+["ひと",["hito"],"człowiek","person"],["あたま",["atama"],"głowa","head"],["さくら",["sakura"],"wiśnia (kwiaty)","cherry blossom"],["はる",["haru"],"wiosna","spring"],
+["なつ",["natsu"],"lato","summer"],["あき",["aki"],"jesień","autumn"],["ふゆ",["fuyu"],"zima","winter"],["あさ",["asa"],"ranek","morning"],
+["よる",["yoru"],"noc, wieczór","night"],["にほん",["nihon"],"Japonia","Japan"],["せんせい",["sensei"],"nauczyciel","teacher"],["がくせい",["gakusei"],"student","student"],
+["ともだち",["tomodachi"],"przyjaciel","friend"],["みず",["mizu"],"woda","water"],["でんわ",["denwa"],"telefon","phone"],["たまご",["tamago"],"jajko","egg"],
+["わたしは ほんを よみます。",["watashi","WA","hon","O","yomimasu"],"Czytam książkę.","I read a book."],
+["ははと うみに いきます。",["haha","to","umi","ni","ikimasu"],"Jadę z mamą nad morze.","I go to the sea with mom."],
+["よる、そらの ほしを みます。",["yoru","sora","no","hoshi","O","mimasu"],"Wieczorem patrzę na gwiazdy na niebie.","At night I look at the stars in the sky."],
+["にわに いぬも ねこも います。",["niwa","ni","inu","mo","neko","mo","imasu"],"W ogrodzie jest i pies, i kot.","There is both a dog and a cat in the garden."],
+["あめの ひは うちに います。",["ame","no","hi","WA","uchi","ni","imasu"],"W deszczowe dni jestem w domu.","On rainy days I stay home."],
+["あには くるまを かいます。",["ani","WA","kuruma","O","kaimasu"],"Brat kupuje samochód.","My brother buys a car."],
+["ちちと えきへ いきます。",["chichi","to","eki","E","ikimasu"],"Idę z tatą na stację.","I go to the station with dad."],
+["ふゆに ゆきを みます。",["fuyu","ni","yuki","O","mimasu"],"Zimą oglądam śnieg.","In winter I watch the snow."],
+["ははは ねこと うちに います。",["haha","WA","neko","to","uchi","ni","imasu"],"Mama jest w domu z kotem.","Mom is at home with the cat."],
+["いぬと ねこを みます。",["inu","to","neko","O","mimasu"],"Patrzę na psa i kota.","I look at the dog and the cat."],
+["わたしは かわを みます。",["watashi","WA","kawa","O","mimasu"],"Patrzę na rzekę.","I look at the river."],
+["ちちは みちを あるきます。",["chichi","WA","michi","O","arukimasu"],"Tata idzie drogą.","Dad walks along the road."],
+["あねと いえに かえります。",["ane","to","ie","ni","kaerimasu"],"Wracam z siostrą do domu.","I go home with my sister."],
+["はるに さくらを みます。",["haru","ni","sakura","O","mimasu"],"Wiosną oglądam kwiaty wiśni.","In spring I watch cherry blossoms."],
+["やまへ いきます。",["yama","E","ikimasu"],"Idę w góry.","I go to the mountains."],
+["みずを のみます。",["mizu","O","nomimasu"],"Piję wodę.","I drink water."]
+];
+const READ_K=[
+["カメラ",["kamera"],"aparat","camera"],["テニス",["tenisu"],"tenis","tennis"],["ホテル",["hoteru"],"hotel","hotel"],["ピアノ",["piano"],"pianino","piano"],
+["トマト",["tomato"],"pomidor","tomato"],["バナナ",["banana"],"banan","banana"],["パン",["pan"],"chleb","bread"],["テレビ",["terebi"],"telewizor","TV"],
+["ラジオ",["rajio"],"radio","radio"],["メロン",["meron"],"melon","melon"],["レモン",["remon"],"cytryna","lemon"],["ペン",["pen"],"długopis","pen"],
+["アニメ",["anime"],"anime","anime"],["ゲーム",["geemu"],"gra","game"],["カレー",["karee"],"curry","curry"],["ケーキ",["keeki"],"ciasto","cake"],
+["ポーランド",["poorando"],"Polska","Poland"],["スマホ",["sumaho"],"smartfon","smartphone"],["ネクタイ",["nekutai"],"krawat","necktie"],["シャツ",["shatsu"],"koszula","shirt"],
+["ドア",["doa"],"drzwi","door"],["ナイフ",["naifu"],"nóż","knife"],["ホテルに いきます。",["hoteru","ni","ikimasu"],"Idę do hotelu.","I go to the hotel."],
+["カメラを かいます。",["kamera","O","kaimasu"],"Kupuję aparat.","I buy a camera."]
+];
+const readPool=()=>script==="hira"?READ_H:script==="kata"?READ_K:READ_H.concat(READ_K);
+const normR=x=>x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/ā/g,"aa").replace(/[^a-z]/g,"");
+const subText=()=>order==="read"?T("readSub")(readPool().length):T("sub")(getPool().length);
 const bigLabel=()=>script==="kata"?"カタカナ":script==="both"?"かなカナ":"ひらがな";
 const wmFirst=()=>script==="kata"?"ア":"あ";
 function setWm(c){wm.textContent=c;wm.style.animation="none";void wm.offsetWidth;wm.style.animation=""}
 function topBar(){return`<div class="top"><div class="lft"><button class="back" id="back" title="${T("back")}" aria-label="${T("back")}">‹</button><div class="logo"><i></i><span>${bigLabel()}</span></div></div><div class="pills"><div class="pill" id="sc">${T("score")} <b>${score}</b></div><div class="pill ${streak>=3?"hot":""}" id="st">${T("streak")} <b>×${streak}</b></div><button class="pill" data-t="1">${T("chart")}</button></div></div>`}
-function start(){track("quiz_start",{script,mode,order,lang});pool=getPool();queue=order==="seq"?pool.slice():shuffle(pool);idx=0;score=0;streak=0;best=0;wrong=[];render()}
+function start(){track("quiz_start",{script,mode,order,lang});pool=order==="read"?readPool():getPool();queue=order==="seq"?pool.slice():shuffle(pool);idx=0;score=0;streak=0;best=0;wrong=[];render()}
 function render(){
   clearTimeout(timer);
   if(idx>=queue.length)return end();
+  if(order==="read")return renderRead();
   cur=queue[idx];answered=false;setWm(cur[0]);
   const seen=new Set([cur[1]]);const mates=mode==="conf"?shuffle(confMates(cur[0])).map(c=>[c,RM[c]]):[];const others=mates.concat(shuffle(pool)).filter(p=>!seen.has(p[1])&&seen.add(p[1])).slice(0,3);
   const opts=shuffle([cur].concat(others));
@@ -298,18 +356,50 @@ function pick(btn){
   else{sfx("bad");btn.classList.add("bad");streak=0;wrong.push(cur);orb.classList.add("bad");document.getElementById("st").classList.remove("hot");document.getElementById("st").querySelector("b").textContent="×0";
     document.getElementById("foot").innerHTML=`<button class="btn in" id="next">${T("next")}</button>`;document.getElementById("next").onclick=next}
 }
+
+function renderRead(){
+  cur=queue[idx];answered=false;setWm([...cur[0]][0]);app.className="";
+  const long=[...cur[0]].length>6;
+  app.innerHTML=`${topBar()}
+  <div class="prog"><div class="lab"><span>${T("readT")}</span><span><b>${idx+1}</b> / ${queue.length}</span></div><div class="track"><i id="bar" style="width:${idx/queue.length*100}%"></i></div></div>
+  <div class="stage"><div class="rcard" id="rc"><div class="rk kf ${long?"long":""}">${cur[0]}</div><div class="rt" id="rt"></div></div></div>
+  <form class="rform" id="rf" autocomplete="off"><input id="ri" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="${T("readPh")}"><button class="btn" id="rb" type="submit">${T("check")}</button></form>
+  <div class="rerr" id="re"></div>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{const b=document.getElementById("bar");if(b)b.style.width=(idx+1)/queue.length*100+"%"}));
+  const ri=document.getElementById("ri");
+  ri.oninput=()=>{document.getElementById("re").textContent=""};
+  document.getElementById("rf").onsubmit=e=>{e.preventDefault();if(answered){next();return}checkRead()};
+  setTimeout(()=>{try{ri.focus({preventScroll:true})}catch(_){}},60);
+}
+function checkRead(){
+  const ri=document.getElementById("ri"),v=normR(ri.value);
+  if(!v){document.getElementById("re").textContent=T("readEmpty");return}
+  const toks=cur[1],canon=normR(toks.join("")),PR={WA:["は","wa","ha"],O:["を","o","wo"],E:["へ","e","he"]};
+  let variants=[{s:"",m:[]}];
+  toks.forEach(t=>{const nv=[];variants.forEach(x=>{if(PR[t]){nv.push({s:x.s+PR[t][1],m:x.m});nv.push({s:x.s+PR[t][2],m:x.m.concat(t)})}else nv.push({s:x.s+t,m:x.m})});variants=nv});
+  const ok=v===canon,hit=ok?null:variants.find(x=>normR(x.s)===v),almost=!!hit;
+  answered=true;
+  const rc=document.getElementById("rc"),shown=toks.map(t=>t.toLowerCase()).join(" ");
+  let note="";
+  if(almost)note=[...new Set(hit.m)].map(t=>`<div class="rn">${T("readAlmost")(PR[t][0],PR[t][1])}</div>`).join("");
+  if(ok||almost){sfx("ok");score++;streak++;best=Math.max(best,streak);rc.classList.add("ok");bump("sc",score);bump("st","×"+streak,streak>=3)}
+  else{sfx("bad");streak=0;wrong.push([cur[0],shown]);rc.classList.add("bad");const st=document.getElementById("st");st.classList.remove("hot");st.querySelector("b").textContent="×0"}
+  document.getElementById("rt").innerHTML=`<b>${shown}</b><span>${lang==="pl"?cur[2]:cur[3]}</span>${!ok&&!almost?`<div class="ry">${T("readYour")}: <s>${ri.value.replace(/[<>&]/g,"")}</s></div>`:""}${note}`;
+  ri.disabled=true;
+  const rb=document.getElementById("rb");rb.textContent=T("next");rb.focus({preventScroll:true});
+}
 function next(){if(!answered)return;answered=false;clearTimeout(timer);app.classList.add("leave");timer=setTimeout(()=>{idx++;render()},220)}
 function modeChips(){
   const scr=[["hira","Hiragana"],["kata","Katakana"],["both",T("both")]].map(x=>`<button class="chip ${script===x[0]?"on":""}" data-s="${x[0]}">${x[1]}</button>`).join("");
   const sets=[["base",T("basic")],["dak",T("dak")],["all",T("all")],["conf",T("conf")]].map(m=>`<button class="chip ${mode===m[0]?"on":""}" data-m="${m[0]}">${m[1]}</button>`).join("");
-  const ord=[["rand",T("rand")],["seq",T("seq")]].map(o=>`<button class="chip ${order===o[0]?"on":""}" data-o="${o[0]}">${o[1]}</button>`).join("");
+  const ord=[["rand",T("rand")],["seq",T("seq")],["read",T("readM")]].map(o=>`<button class="chip ${order===o[0]?"on":""}" data-o="${o[0]}">${o[1]}</button>`).join("");
   return`<div class="chips">${scr}</div><div class="chips">${sets}</div><div class="chips">${ord}</div>`;
 }
-function bindModes(){app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{if(c.dataset.s){script=c.dataset.s;try{localStorage.setItem("hq-script",script)}catch(e){}if(document.getElementById("go")){intro();return}}else if(c.dataset.m)mode=c.dataset.m;else order=c.dataset.o;app.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.s?x.dataset.s===script:x.dataset.m?x.dataset.m===mode:x.dataset.o===order));const p=document.getElementById("sub");if(p)p.textContent=T("sub")(getPool().length)})}
+function bindModes(){app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{if(c.dataset.s){script=c.dataset.s;try{localStorage.setItem("hq-script",script)}catch(e){}if(document.getElementById("go")){intro();return}}else if(c.dataset.m)mode=c.dataset.m;else order=c.dataset.o;app.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.s?x.dataset.s===script:x.dataset.m?x.dataset.m===mode:x.dataset.o===order));const p=document.getElementById("sub");if(p)p.textContent=subText()})}
 function intro(){
   clearTimeout(timer);app.className="";setWm(wmFirst());
   app.innerHTML=`<div class="top" style="justify-content:flex-end"><div class="topr"><button class="snd" id="snd" aria-label="sound">${sndOn?SND_ON:SND_OFF}</button><div class="lang"><button data-l="pl" class="${lang==="pl"?"on":""}">PL</button><button data-l="en" class="${lang==="en"?"on":""}">EN</button></div></div></div><div class="hero"><div class="big kf">${[...bigLabel()].map((c,i)=>`<span style="animation-delay:${i*.07}s">${c}</span>`).join("")}</div>
-  <h2>${T("h2")(script)}</h2><p id="sub">${T("sub")(getPool().length)}</p>
+  <h2>${T("h2")(script)}</h2><p id="sub">${subText()}</p>
   <div class="setup chips a" style="flex-direction:column;gap:0">${modeChips()}</div></div>
   <div class="foot2"><button class="btn" id="go">${T("start")}</button><button class="inst" id="inst"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>${T("install")}</button><button class="link" data-t="1">${T("chartLink")}</button></div>`;
   app.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>setLang(b.dataset.l));
@@ -355,6 +445,8 @@ document.addEventListener("keydown",e=>{
   if(sheet.classList.contains("on")){if(e.key==="Escape")closeSheet();return}
   if(ov.classList.contains("on")){if(e.key==="Escape")closeOv();return}
   if(e.key==="Escape"&&!document.getElementById("go")){intro();return}
+  if(e.target&&e.target.tagName==="INPUT")return;
+  if(order==="read"&&(e.key==="Enter"||e.key===" ")&&document.getElementById("rb")){return}
   if(e.key>="1"&&e.key<="4"&&!answered){const b=app.querySelectorAll(".opt")[+e.key-1];if(b)pick(b)}
   else if((e.key==="Enter"||e.key===" ")&&answered){e.preventDefault();next()}
 });
