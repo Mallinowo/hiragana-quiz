@@ -220,7 +220,8 @@ body{background:var(--bg);color:var(--ink)}
 .rt b{font-size:20px;font-weight:700;color:var(--ink);letter-spacing:.01em}
 .rcard.ok .rt b{color:var(--good)}
 .ry{font-size:13px;margin-top:4px}
-.ry s{color:var(--wrong)}
+.ry .rbad{color:var(--wrong);text-decoration:line-through;text-decoration-thickness:2px;font-weight:700}
+.rgood{font-style:normal;color:var(--good);background:rgba(47,143,84,.14);border-radius:6px;padding:0 5px}
 .rn{font-size:13px;margin-top:6px;color:var(--acc);font-weight:600}
 .rform{display:flex;gap:10px;margin-top:6px}
 .rform input{flex:1;min-width:0;height:58px;border-radius:18px;border:1.5px solid var(--line);background:var(--surf2);font:inherit;font-size:20px;font-weight:600;padding:0 16px;color:var(--ink);-webkit-appearance:none}
@@ -371,6 +372,38 @@ function renderRead(){
   document.getElementById("rf").onsubmit=e=>{e.preventDefault();if(answered){next();return}checkRead()};
   setTimeout(()=>{try{ri.focus({preventScroll:true})}catch(_){}},60);
 }
+function diffTok(u,toks){
+  const c=toks.join(""),own=[];toks.forEach((t,i)=>{for(const _ of t)own.push(i)});
+  const n=c.length,m=u.length,d=[];for(let i=0;i<=n;i++){d.push(new Array(m+1).fill(0));d[i][0]=i}for(let j=0;j<=m;j++)d[0][j]=j;
+  for(let i=1;i<=n;i++)for(let j=1;j<=m;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(c[i-1]===u[j-1]?0:1));
+  const ops=[];let i=n,j=m;
+  while(i>0||j>0){if(i>0&&j>0&&d[i][j]===d[i-1][j-1]+(c[i-1]===u[j-1]?0:1)){ops.push([c[i-1]===u[j-1]?"m":"s",i-1,j-1]);i--;j--}else if(j>0&&d[i][j]===d[i][j-1]+1){ops.push(["i",i,j-1]);j--}else{ops.push(["d",i-1,-1]);i--}}
+  ops.reverse();
+  const seg=toks.map(()=>""),bad=toks.map(()=>false);
+  ops.forEach(([o,a,b])=>{const t=o==="i"?(a<n?own[a]:toks.length-1):own[a];if(b>=0)seg[t]+=u[b];if(o!=="m")bad[t]=true});
+  return{seg,bad};
+}
+function diffWords(uw,toks){
+  const n=toks.length,m=uw.length,INF=1e9,d=[],bk=[];
+  for(let i=0;i<=n;i++){d.push(new Array(m+1).fill(INF));bk.push(new Array(m+1).fill(null))}
+  d[0][0]=0;
+  for(let i=0;i<=n;i++)for(let j=0;j<=m;j++){
+    const cur=d[i][j];if(cur>=INF)continue;
+    const relax=(a,b,c,op)=>{if(i+a<=n&&j+b<=m&&cur+c<d[i+a][j+b]){d[i+a][j+b]=cur+c;bk[i+a][j+b]=[a,b,op]}};
+    relax(1,0,1,"d");relax(0,1,1,"i");
+    for(const[a,b]of[[1,1],[2,1],[1,2]]){if(i+a>n||j+b>m)continue;const cs=toks.slice(i,i+a).join(""),us=uw.slice(j,j+b).join("");relax(a,b,cs===us?0:(a===1&&b===1?1:1.6),cs===us?"m":"s")}
+  }
+  const ops=[];let i=n,j=m;while(i>0||j>0){const[a,b,op]=bk[i][j];ops.push([op,i-a,a,j-b,b]);i-=a;j-=b}
+  ops.reverse();
+  const bad=toks.map(()=>false),out=[];
+  ops.forEach(([op,ci,a,uj,b])=>{
+    if(op==="m"){out.push({t:uw.slice(uj,uj+b).join(""),bad:false})}
+    else if(op==="d"){bad[ci]=true;out.push({t:"_",bad:true})}
+    else if(op==="i"){out.push({t:uw[uj],bad:true});if(ci<n)bad[ci]=true;else bad[n-1]=true}
+    else{for(let k=0;k<a;k++)bad[ci+k]=true;out.push({t:uw.slice(uj,uj+b).join(" "),bad:true})}
+  });
+  return{bad,out};
+}
 function checkRead(){
   const ri=document.getElementById("ri"),v=normR(ri.value);
   if(!v){document.getElementById("re").textContent=T("readEmpty");return}
@@ -384,7 +417,16 @@ function checkRead(){
   if(almost)note=[...new Set(hit.m)].map(t=>`<div class="rn">${T("readAlmost")(PR[t][0],PR[t][1])}</div>`).join("");
   if(ok||almost){sfx("ok");score++;streak++;best=Math.max(best,streak);rc.classList.add("ok");bump("sc",score);bump("st","×"+streak,streak>=3)}
   else{sfx("bad");streak=0;wrong.push([cur[0],shown]);rc.classList.add("bad");const st=document.getElementById("st");st.classList.remove("hot");st.querySelector("b").textContent="×0"}
-  document.getElementById("rt").innerHTML=`<b>${shown}</b><span>${lang==="pl"?cur[2]:cur[3]}</span>${!ok&&!almost?`<div class="ry">${T("readYour")}: <s>${ri.value.replace(/[<>&]/g,"")}</s></div>`:""}${note}`;
+  let shownH=shown,diffHtml="";
+  if(!ok&&!almost){
+    const lt=toks.map(t=>t.toLowerCase()),uw=ri.value.toLowerCase().split(/[^a-zA-Zāēīōū]+/).map(normR).filter(Boolean);
+    let bad,items;
+    if(uw.length===1&&lt.length>2){const df=diffTok(v,lt);bad=df.bad;items=lt.map((t,i)=>df.seg[i]?{t:df.seg[i],bad:df.bad[i]}:(df.bad[i]?{t:"_",bad:true}:null)).filter(Boolean)}
+    else{const df=diffWords(uw,lt);bad=df.bad;items=df.out}
+    shownH=lt.map((t,i)=>bad[i]?`<em class="rgood">${t}</em>`:t).join(" ");
+    diffHtml=`<div class="ry">${T("readYour")}: ${items.map(x=>x.bad?`<span class="rbad">${x.t}</span>`:x.t).join(" ")}</div>`;
+  }
+  document.getElementById("rt").innerHTML=`<b>${shownH}</b><span>${lang==="pl"?cur[2]:cur[3]}</span>${!ok&&!almost?diffHtml:""}${note}`;
   ri.disabled=true;
   const rb=document.getElementById("rb");rb.textContent=T("next");rb.focus({preventScroll:true});
 }
