@@ -309,7 +309,8 @@ body.atend .hint{display:none}
 .lme b{font-size:17px;font-weight:600}
 .lme small{font-size:12px;color:var(--mute)}
 .lme em{font-style:normal;color:var(--acc);font-weight:800}
-.vpl{font-size:min(6.6vw,26px);font-weight:800;line-height:1.35;letter-spacing:-.01em;animation:stamp .45s var(--ease) both}
+.vpl{font-size:min(6.6vw,26px);font-weight:800;line-height:1.35;letter-spacing:-.01em;animation:vplIn .4s var(--ease) both}
+@keyframes vplIn{from{opacity:0;transform:translateY(8px) scale(.94)}}
 .wbank{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:0 0 12px}
 .wchip{font:inherit;font-size:15px;font-weight:700;padding:9px 13px;border-radius:12px;border:1.5px solid var(--line);background:var(--surf);color:var(--ink);cursor:pointer;box-shadow:0 2px 0 rgba(34,29,23,.06);transition:opacity .15s,transform .1s}
 .wchip:active{transform:scale(.96)}
