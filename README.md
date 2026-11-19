@@ -13,6 +13,8 @@ Darmowy quiz do nauki japońskich sylabariuszy: hiragany i katakany. Działa w p
 - **Wybieranie z 4 odpowiedzi** albo **wpisywanie romaji** (np. widzisz サ i wpisujesz „sa”).
 - **4 odpowiedzi do wyboru.** Dobra odpowiedź podświetla się na zielono, zła na czerwono, a apka pokazuje poprawną.
 - **Wynik i seria.** Po rundzie widać wynik, najdłuższą serię i listę znaków do powtórki.
+- **Słówka**: fiszki z ~380 słowami (japoński → polski i odwrotnie). Apka zapamiętuje, które słowa znasz, i częściej pokazuje te sprawiające trudność.
+- **Tłumaczenie**: zdanie po polsku, piszesz je po japońsku w romaji albo układasz z podpowiedzianych słów.
 - **Liczby i ceny**: 4 poziomy (1–10, 11–100, do 10 000, ceny w jenach). Pytania w obie strony: wybierasz czytanie liczby albo wpisujesz liczbę z zapisu w kanie, z wyjaśnieniem nieregularnych form (さんびゃく, はっせん, よえん…).
 - **Tablica znaków** z romaji dla obu pism i ściągą z partykułami (は, を, に, へ, と, の, も, が, で).
 - **Tryb „Czytanie”**: słowa i zdania do przeczytania, wpisujesz romaji i od razu widzisz poprawne czytanie oraz tłumaczenie.
