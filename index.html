@@ -488,7 +488,7 @@ const READ_H=[
 ["さる", ["saru"], "małpa", "monkey"],
 ["くま", ["kuma"], "niedźwiedź", "bear"],
 ["うさぎ", ["usagi"], "królik", "rabbit"],
-["かえる", ["kaeru"], "żaba", "frog"],
+["かえる", ["kaeru"], "wracać", "to go back"],
 ["へび", ["hebi"], "wąż", "snake"],
 ["むし", ["mushi"], "owad", "insect"],
 ["たぬき", ["tanuki"], "jenot", "raccoon dog"],
@@ -737,7 +737,101 @@ const READ_H=[
 ["りょこうが すきです。", ["ryokou", "ga", "suki", "desu"], "Lubię podróże.", "I like traveling."],
 ["ぎゅうにゅうを のみます。", ["gyuunyuu", "O", "nomimasu"], "Piję mleko.", "I drink milk."],
 ["まっすぐ いって ください。", ["massugu", "itte", "kudasai"], "Proszę iść prosto.", "Please go straight."],
-["しゅうまつに きょうとへ いきます。", ["shuumatsu", "ni", "kyouto", "E", "ikimasu"], "W weekend jadę do Kioto.", "On the weekend I go to Kyoto."]
+["しゅうまつに きょうとへ いきます。", ["shuumatsu", "ni", "kyouto", "E", "ikimasu"], "W weekend jadę do Kioto.", "On the weekend I go to Kyoto."],
+["ここ", ["koko"], "tutaj", "here"],
+["そこ", ["soko"], "tam (przy tobie)", "there (near you)"],
+["あそこ", ["asoko"], "tam (daleko)", "over there"],
+["どこ", ["doko"], "gdzie?", "where?"],
+["これ", ["kore"], "to (przy mnie)", "this"],
+["それ", ["sore"], "to (przy tobie)", "that"],
+["あれ", ["are"], "tamto (daleko)", "that over there"],
+["どれ", ["dore"], "który?", "which one?"],
+["なに", ["nani"], "co?", "what?"],
+["だれ", ["dare"], "kto?", "who?"],
+["いつ", ["itsu"], "kiedy?", "when?"],
+["いくら", ["ikura"], "ile kosztuje?", "how much?"],
+["いくつ", ["ikutsu"], "ile sztuk?", "how many?"],
+["どうして", ["doushite"], "dlaczego?", "why?"],
+["どう", ["dou"], "jak?", "how?"],
+["わたし", ["watashi"], "ja", "I"],
+["あなた", ["anata"], "ty", "you"],
+["かれ", ["kare"], "on", "he"],
+["かのじょ", ["kanojo"], "ona", "she"],
+["みんな", ["minna"], "wszyscy", "everyone"],
+["する", ["suru"], "robić", "to do"],
+["ある", ["aru"], "być, mieć (rzeczy)", "to be, to have (things)"],
+["いる", ["iru"], "być (ludzie, zwierzęta)", "to be (people, animals)"],
+["あう", ["au"], "spotykać się", "to meet"],
+["もつ", ["motsu"], "trzymać, mieć przy sobie", "to hold, to carry"],
+["とる", ["toru"], "brać, robić (zdjęcie)", "to take"],
+["いう", ["iu"], "powiedzieć", "to say"],
+["おもう", ["omou"], "myśleć", "to think"],
+["しる", ["shiru"], "dowiedzieć się, znać", "to know"],
+["はいる", ["hairu"], "wchodzić", "to enter"],
+["でる", ["deru"], "wychodzić", "to go out"],
+["のる", ["noru"], "wsiadać, jechać czymś", "to ride, to get on"],
+["おりる", ["oriru"], "wysiadać", "to get off"],
+["つかう", ["tsukau"], "używać", "to use"],
+["はたらく", ["hataraku"], "pracować", "to work"],
+["やすむ", ["yasumu"], "odpoczywać", "to rest"],
+["すわる", ["suwaru"], "siadać", "to sit"],
+["たつ", ["tatsu"], "wstawać (na nogi)", "to stand up"],
+["わすれる", ["wasureru"], "zapominać", "to forget"],
+["おぼえる", ["oboeru"], "zapamiętywać", "to memorize"],
+["はじめる", ["hajimeru"], "zaczynać", "to start"],
+["まがる", ["magaru"], "skręcać", "to turn"],
+["できる", ["dekiru"], "móc, umieć", "can, to be able"],
+["いい", ["ii"], "dobry", "good"],
+["わるい", ["warui"], "zły", "bad"],
+["むずかしい", ["muzukashii"], "trudny", "difficult"],
+["やさしい", ["yasashii"], "łatwy, miły", "easy, kind"],
+["おもしろい", ["omoshiroi"], "ciekawy, zabawny", "interesting, funny"],
+["いそがしい", ["isogashii"], "zajęty", "busy"],
+["ひま", ["hima"], "mający czas wolny", "free (not busy)"],
+["ちかい", ["chikai"], "bliski", "near"],
+["とおい", ["tooi"], "daleki", "far"],
+["あまい", ["amai"], "słodki", "sweet"],
+["からい", ["karai"], "ostry (smak)", "spicy"],
+["ほしい", ["hoshii"], "chcieć (coś)", "to want (something)"],
+["だいじょうぶ", ["daijoubu"], "w porządku", "okay, all right"],
+["とても", ["totemo"], "bardzo", "very"],
+["すこし", ["sukoshi"], "trochę", "a little"],
+["たくさん", ["takusan"], "dużo", "a lot"],
+["もう", ["mou"], "już", "already"],
+["まだ", ["mada"], "jeszcze, wciąż", "still, not yet"],
+["よく", ["yoku"], "często, dobrze", "often, well"],
+["いつも", ["itsumo"], "zawsze", "always"],
+["ときどき", ["tokidoki"], "czasami", "sometimes"],
+["ぜんぶ", ["zenbu"], "wszystko", "everything"],
+["また", ["mata"], "znowu", "again"],
+["まえ", ["mae"], "przód, przed", "front, before"],
+["うしろ", ["ushiro"], "tył, za", "back, behind"],
+["うえ", ["ue"], "góra, na", "top, on"],
+["した", ["shita"], "dół, pod", "bottom, under"],
+["なか", ["naka"], "środek, w", "inside"],
+["となり", ["tonari"], "obok", "next to"],
+["ちかく", ["chikaku"], "w pobliżu", "nearby"],
+["なまえ", ["namae"], "imię", "name"],
+["しごと", ["shigoto"], "praca", "job, work"],
+["かいもの", ["kaimono"], "zakupy", "shopping"],
+["えいご", ["eigo"], "język angielski", "English"],
+["しつもん", ["shitsumon"], "pytanie", "question"],
+["こたえ", ["kotae"], "odpowiedź", "answer"],
+["ことば", ["kotoba"], "słowo", "word"],
+["あさごはん", ["asagohan"], "śniadanie", "breakfast"],
+["ひるごはん", ["hirugohan"], "obiad (w południe)", "lunch"],
+["ばんごはん", ["bangohan"], "kolacja", "dinner"],
+["てんき", ["tenki"], "pogoda", "weather"],
+["じかん", ["jikan"], "czas, godzina", "time, hour"],
+["くすり", ["kusuri"], "lekarstwo", "medicine"],
+["ちず", ["chizu"], "mapa", "map"],
+["うち", ["uchi"], "dom (mój)", "home"],
+["ください", ["kudasai"], "poproszę", "please give me"],
+["おねがいします", ["onegaishimasu"], "proszę (o przysługę)", "please (a favor)"],
+["ごめんなさい", ["gomennasai"], "przepraszam (za błąd)", "I'm sorry"],
+["わかりました", ["wakarimashita"], "zrozumiałem, dobrze", "understood"],
+["はじめまして", ["hajimemashite"], "miło mi poznać", "nice to meet you"],
+["だいすき", ["daisuki"], "bardzo lubię, kocham", "love, really like"]
 ];
 const READ_K=[
 ["カメラ",["kamera"],"aparat","camera"],["テニス",["tenisu"],"tenis","tennis"],["ホテル",["hoteru"],"hotel","hotel"],["ピアノ",["piano"],"pianino","piano"],
@@ -927,7 +1021,12 @@ const READ_K=[
 ["ケーキは あまいです。", ["keeki", "WA", "amai", "desu"], "Ciasto jest słodkie.", "The cake is sweet."],
 ["アイスを たべたいです。", ["aisu", "O", "tabetai", "desu"], "Chcę zjeść lody.", "I want to eat ice cream."],
 ["ゼリーが すきです。", ["zerii", "ga", "suki", "desu"], "Lubię galaretkę.", "I like jelly."],
-["スープを のみます。", ["suupu", "O", "nomimasu"], "Jem zupę.", "I have soup."]
+["スープを のみます。", ["suupu", "O", "nomimasu"], "Jem zupę.", "I have soup."],
+["カード", ["kaado"], "karta", "card"],
+["レジ", ["reji"], "kasa (w sklepie)", "checkout"],
+["アルバイト", ["arubaito"], "praca dorywcza", "part-time job"],
+["ネット", ["netto"], "internet", "internet"],
+["ビル", ["biru"], "budynek", "building"]
 ];
 const READ_ROUND=20;
 const hasKata=x=>/[\u30A1-\u30FA\u30FC]/.test(x);
@@ -1124,9 +1223,11 @@ function checkTypeChar(){
 }
 
 
-const VCAT=(()=>{const m={};Object.entries({"ani": "ねこ いぬ さかな とり うま うし ぶた さる くま うさぎ かえる へび むし たぬき きつね ねずみ かめ", "food": "たまご ごはん やさい くだもの りんご すし そば うどん にく みかん いちご すいか もも なす だいこん しお さとう みそ おにぎり てんぷら からあげ すきやき おちゃ ぎゅうにゅう ぎょうざ しょうゆ みず トマト バナナ パン メロン レモン カレー ケーキ コーヒー ゼリー サラダ ピザ デザート ビール ワイン アイス チーズ バター ハンバーガー パスタ スープ オレンジ ラーメン ジュース チョコレート", "body": "あたま からだ あし て かお くち みみ め かみ くび せなか おなか ゆび", "ppl": "ひと せんせい がくせい ともだち かぞく おとうと おとうさん おかあさん おにいさん おねえさん そふ そぼ こども おとな おとこ おんな いしゃ", "nat": "やま うみ そら ほし つき はな あめ ゆき かわ さくら かぜ き もり いけ しま いし すな くも にじ かみなり たいよう はっぱ", "place": "きんじょ いえ みち そと まち むら みせ へや にわ えき こうえん ぎんこう だいどころ おふろ がっこう びょういん としょかん きっさてん しょくどう かいしゃ でぐち いりぐち ホテル レストラン デパート スーパー コンビニ トイレ", "obj": "ほん でんわ かぎ かばん めがね まど つくえ いす にもつ おかね しんぶん てがみ かさ とけい かがみ はさみ ふとん まくら さら はし えんぴつ けしごむ ゆびわ しゃしん きっぷ ざっし じしょ きって せっけん にんぎょう がっき カメラ ピアノ テレビ ラジオ ペン スマホ ドア ナイフ ノート ボール ギター テーブル パソコン メール スプーン タオル コップ ベッド ロボット チケット コンピューター エレベーター メニュー", "cloth": "くつ ふく くつした ぼうし てぶくろ ネクタイ シャツ ズボン セーター スカート コート", "trans": "くるま ひこうき でんしゃ じてんしゃ バス タクシー", "time": "はる なつ あき ふゆ あさ よる きのう あした いま まいにち ひる ゆうがた なつやすみ ことし らいねん にちようび げつようび かようび すいようび もくようび きんようび どようび きょう しゅうまつ", "num": "いち さん よん ご ろく なな はち せん みっつ よっつ ひゃく きゅう じゅう", "adj": "あかい あおい しろい ちいさい やすい おいしい さむい おおきい あたらしい ふるい ながい みじかい たかい ひくい あつい はやい おそい たのしい かなしい うれしい かわいい きれい げんき しずか にぎやか すき きらい くろい きいろい みどり ちゃいろ", "verb": "たべる のむ みる きく かく よむ はなす いく くる ねる おきる あそぶ およぐ はしる あるく うたう おどる かう うる まつ わかる すむ つくる あらう おしえる ならう あける しめる", "phr": "ありがとう おはよう さようなら おやすみ すみません いただきます ごちそうさま はい いいえ どうぞ こんにちは こんばんは ちょっと いっしょ まっすぐ いっぱい ひだり みぎ", "geo": "にほん にほんご とうきょう きょうと ほっかいどう にっぽん ちゅうごく ポーランド アメリカ カナダ ドイツ フランス イタリア ロシア スペイン インド エジプト", "fun": "しゅみ りょこう べんきょう しゅくだい りょうり しゅっぱつ テニス アニメ ゲーム マンガ カラオケ ゴルフ スキー サッカー キャンプ シャワー チャンス ショッピング ニュース"}).forEach(([c,s])=>s.split(" ").forEach(w=>m[w]=c));return m})();
+const VCAT=(()=>{const m={};Object.entries({"ani": "ねこ いぬ さかな とり うま うし ぶた さる くま うさぎ へび むし たぬき きつね ねずみ かめ", "food": "たまご ごはん やさい くだもの りんご すし そば うどん にく みかん いちご すいか もも なす だいこん しお さとう みそ おにぎり てんぷら からあげ すきやき おちゃ ぎゅうにゅう ぎょうざ しょうゆ みず トマト バナナ パン メロン レモン カレー ケーキ コーヒー ゼリー サラダ ピザ デザート ビール ワイン アイス チーズ バター ハンバーガー パスタ スープ オレンジ ラーメン ジュース チョコレート あさごはん ひるごはん ばんごはん", "body": "あたま からだ あし て かお くち みみ め かみ くび せなか おなか ゆび", "ppl": "ひと せんせい がくせい ともだち かぞく おとうと おとうさん おかあさん おにいさん おねえさん そふ そぼ こども おとな おとこ おんな いしゃ わたし あなた かれ かのじょ みんな", "nat": "やま うみ そら ほし つき はな あめ ゆき かわ さくら かぜ き もり いけ しま いし すな くも にじ かみなり たいよう はっぱ てんき", "place": "きんじょ いえ みち そと まち むら みせ へや にわ えき こうえん ぎんこう だいどころ おふろ がっこう びょういん としょかん きっさてん しょくどう かいしゃ でぐち いりぐち ホテル レストラン デパート スーパー コンビニ トイレ うち レジ ビル", "obj": "ほん でんわ かぎ かばん めがね まど つくえ いす にもつ おかね しんぶん てがみ かさ とけい かがみ はさみ ふとん まくら さら はし えんぴつ けしごむ ゆびわ しゃしん きっぷ ざっし じしょ きって せっけん にんぎょう がっき カメラ ピアノ テレビ ラジオ ペン スマホ ドア ナイフ ノート ボール ギター テーブル パソコン メール スプーン タオル コップ ベッド ロボット チケット コンピューター エレベーター メニュー くすり ちず カード ネット", "cloth": "くつ ふく くつした ぼうし てぶくろ ネクタイ シャツ ズボン セーター スカート コート", "trans": "くるま ひこうき でんしゃ じてんしゃ バス タクシー", "time": "はる なつ あき ふゆ あさ よる きのう あした いま まいにち ひる ゆうがた なつやすみ ことし らいねん にちようび げつようび かようび すいようび もくようび きんようび どようび きょう しゅうまつ じかん", "num": "いち さん よん ご ろく なな はち せん みっつ よっつ ひゃく きゅう じゅう", "adj": "あかい あおい しろい ちいさい やすい おいしい さむい おおきい あたらしい ふるい ながい みじかい たかい ひくい あつい はやい おそい たのしい かなしい うれしい かわいい きれい げんき しずか にぎやか すき きらい くろい きいろい みどり ちゃいろ いい わるい むずかしい やさしい おもしろい いそがしい ひま ちかい とおい あまい からい ほしい だいじょうぶ", "verb": "たべる のむ みる きく かく よむ はなす いく くる ねる おきる あそぶ およぐ はしる あるく うたう おどる かう うる まつ わかる すむ つくる あらう おしえる ならう あける しめる する ある いる あう もつ とる いう おもう しる はいる でる のる おりる つかう はたらく やすむ すわる たつ わすれる おぼえる はじめる まがる できる かえる", "phr": "ありがとう おはよう さようなら おやすみ すみません いただきます ごちそうさま はい いいえ どうぞ こんにちは こんばんは ちょっと いっしょ まっすぐ いっぱい ひだり みぎ ください おねがいします ごめんなさい わかりました はじめまして だいすき", "geo": "にほん にほんご とうきょう きょうと ほっかいどう にっぽん ちゅうごく ポーランド アメリカ カナダ ドイツ フランス イタリア ロシア スペイン インド エジプト", "fun": "しゅみ りょこう べんきょう しゅくだい りょうり しゅっぱつ テニス アニメ ゲーム マンガ カラオケ ゴルフ スキー サッカー キャンプ シャワー チャンス ショッピング ニュース", "dem": "ここ そこ あそこ どこ これ それ あれ どれ", "q": "なに だれ いつ いくら いくつ どうして どう", "adv": "とても すこし たくさん もう まだ よく いつも ときどき ぜんぶ また", "pos": "まえ うしろ うえ した なか となり ちかく", "misc": "なまえ しごと かいもの えいご しつもん こたえ ことば アルバイト"}).forEach(([c,s])=>s.split(" ").forEach(w=>m[w]=c));return m})();
+const VDROP=new Set(["いけ", "いし", "いちご", "うさぎ", "うし", "うま", "おふろ", "かみなり", "かめ", "からあげ", "がっき", "きって", "きつね", "きょうと", "くつした", "くび", "くま", "けしごむ", "さら", "さる", "ざっし", "しま", "しゅっぱつ", "すいか", "すきやき", "すな", "せっけん", "せなか", "そふ", "そぼ", "たいよう", "たぬき", "だいこん", "だいどころ", "ちゅうごく", "つき", "てぶくろ", "てんぷら", "なす", "にじ", "にっぽん", "にんぎょう", "ねずみ", "はさみ", "はっぱ", "ふとん", "ぶた", "へび", "ほし", "ほっかいどう", "まくら", "みかん", "みそ", "むし", "むら", "もも", "もり", "ゆび", "ゆびわ", "イタリア", "インド", "エジプト", "エレベーター", "オレンジ", "カナダ", "カラオケ", "キャンプ", "ゲーム", "コンピューター", "ゴルフ", "ショッピング", "スカート", "スキー", "スプーン", "スペイン", "セーター", "ゼリー", "タオル", "チャンス", "デザート", "ドイツ", "ナイフ", "ニュース", "ネクタイ", "ハンバーガー", "パスタ", "フランス", "メロン", "レモン", "ロシア", "ロボット"]);
+const VTOP=new Set(["あした", "あそこ", "あなた", "ありがとう", "ある", "あれ", "いい", "いいえ", "いく", "いくら", "いつ", "いま", "いる", "えき", "おおきい", "おねがいします", "おはよう", "かう", "かえる", "きのう", "きょう", "ください", "くる", "ここ", "これ", "こんにちは", "ごはん", "すこし", "すみません", "する", "そこ", "それ", "たかい", "たくさん", "たべる", "だれ", "ちいさい", "とても", "ともだち", "どこ", "なに", "にほん", "にほんご", "のむ", "はい", "はなす", "みず", "みせ", "みる", "やすい", "わかる", "わたし", "わるい", "コンビニ", "スーパー", "トイレ"]);
 const isSent=x=>x[0].includes("。");
-const vocPool=()=>{const all=script==="hira"?READ_H.filter(x=>!hasKata(x[0])):script==="kata"?READ_K:READ_H.concat(READ_K);return all.filter(x=>!isSent(x))};
+const vocPool=()=>{const all=script==="hira"?READ_H.filter(x=>!hasKata(x[0])):script==="kata"?READ_K:READ_H.concat(READ_K);return all.filter(x=>!isSent(x)&&!VDROP.has(x[0]))};
 const trPool=()=>readPool().filter(isSent);
 let SRS={};try{SRS=JSON.parse(localStorage.getItem("hq-srs")||"{}")||{}}catch(e){SRS={}}
 const saveSRS=()=>{try{localStorage.setItem("hq-srs",JSON.stringify(SRS))}catch(e){}};
@@ -1134,8 +1235,8 @@ const knownN=()=>vocPool().filter(x=>(SRS[x[0]]||0)>=3).length;
 const romaOf=x=>x[1].map(t=>t.toLowerCase()).join(" ");
 const mean=x=>lang==="pl"?x[2]:x[3];
 function genVocab(){
-  const pool=vocPool().map(x=>({x,b:SRS[x[0]]||0,r:Math.random()}));
-  pool.sort((a,b)=>a.b-b.b||a.r-b.r);
+  const pool=vocPool().map(x=>({x,b:Math.min(SRS[x[0]]||0,3),t:VTOP.has(x[0])?0:1,r:Math.random()}));
+  pool.sort((a,b)=>a.b-b.b||a.t-b.t||a.r-b.r);
   return shuffle(pool.slice(0,20).map(o=>({x:o.x,dir:Math.random()<.5?"jp":"pl",type:o.b>=2})));
 }
 function renderVocab(){
