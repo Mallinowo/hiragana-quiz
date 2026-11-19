@@ -212,6 +212,13 @@ body{background:var(--bg);color:var(--ink)}
 .pe .kf{color:var(--ink);font-size:15px}
 .rcard{width:100%;background:var(--surf);border:1.5px solid var(--line);border-radius:24px;padding:30px 18px 24px;text-align:center;box-shadow:0 10px 24px -16px rgba(60,40,20,.35);animation:orbIn .5s var(--ease) both;transition:border-color .2s}
 .rk{font-size:min(15vw,64px);line-height:1.35;animation:stamp .45s var(--ease) both;word-break:keep-all}
+.rk{max-width:100%;overflow-wrap:anywhere}
+.rk.nk{word-break:keep-all;overflow-wrap:normal;font-size:min(7vw,30px)}
+.rt b{overflow-wrap:anywhere}
+.nopts .opt span{word-break:keep-all;overflow-wrap:normal}
+.nopts .opt{font-size:min(5.2vw,20px)}
+#app.numq .stage{flex:1 0 auto;margin:14px 0}
+#app.numq .rcard{padding:22px 16px 18px}
 .rk.long{font-size:min(7.4vw,30px);line-height:1.6}
 .rcard.ok{border-color:var(--good);box-shadow:0 0 0 4px rgba(47,143,84,.12)}
 .rcard.bad{border-color:var(--wrong);box-shadow:0 0 0 4px rgba(200,55,45,.1);animation:shake .4s ease}
@@ -842,7 +849,7 @@ function numPieces(n,naive){
 function numRead(n,yen,naive){
   const P=numPieces(n,naive);
   if(yen){if(!naive&&n%10===4)P[P.length-1]=["よ","yo"];P.push(["えん","en"])}
-  return{k:P.map(p=>p[0]).join(""),r:P.map(p=>p[1]).join("")};
+  return{k:P.map(p=>p[0]).join(""),r:P.map(p=>p[1]).join(""),h:P.map(p=>p[0]).join("<wbr>"),rs:P.map(p=>p[1]).join(" ")};
 }
 const numFmt=n=>n.toLocaleString("en-US");
 function numNotes(n,yen){
@@ -879,16 +886,16 @@ function numOpts(q){
   return shuffle(out);
 }
 function renderNum(){
-  cur=queue[idx];answered=false;const R=numRead(cur.n,cur.yen);cur.R=R;setWm([...R.k][0]);app.className="";
+  cur=queue[idx];answered=false;const R=numRead(cur.n,cur.yen);cur.R=R;setWm([...R.k][0]);app.className="numq";
   const num=`${cur.yen?"¥":""}${numFmt(cur.n)}${cur.yen?'<span class="kf ny">円</span>':""}`;
   const top=`${topBar()}<div class="prog"><div class="lab"><span>${T("numT")}</span><span><b>${idx+1}</b> / ${queue.length}</span></div><div class="track"><i id="bar" style="width:${idx/queue.length*100}%"></i></div></div>`;
   if(cur.dir==="pick"){
     const opts=numOpts(cur);
     app.innerHTML=`${top}<div class="stage"><div class="rcard" id="rc"><div class="nq">${T(cur.yen?"qPrice":"qNum")}</div><div class="nbig">${num}</div><div class="rt" id="rt"></div></div></div>
-    <div class="opts nopts">${opts.map((o,i)=>`<button class="opt" data-r="${o.k}"><small>${i+1}</small><span class="kf">${o.k}</span></button>`).join("")}</div><div class="foot" id="foot"></div>`;
+    <div class="opts nopts">${opts.map((o,i)=>`<button class="opt" data-r="${o.k}"><small>${i+1}</small><span class="kf">${o.h}</span></button>`).join("")}</div><div class="foot" id="foot"></div>`;
     app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pickNum(b));
   }else{
-    app.innerHTML=`${top}<div class="stage"><div class="rcard" id="rc"><div class="nq">${T("qType")}</div><div class="rk kf long">${R.k}</div><div class="rt" id="rt"></div></div></div>
+    app.innerHTML=`${top}<div class="stage"><div class="rcard" id="rc"><div class="nq">${T("qType")}</div><div class="rk kf long nk">${R.h}</div><div class="rt" id="rt"></div></div></div>
     <form class="rform" id="rf" autocomplete="off"><input id="ri" type="text" inputmode="numeric" autocomplete="off" enterkeyhint="go" placeholder="${T("numPh")}"><button class="btn" id="rb" type="submit">${T("check")}</button></form><div class="rerr" id="re"></div>`;
     const ri=document.getElementById("ri");ri.oninput=()=>{document.getElementById("re").textContent=""};
     document.getElementById("rf").onsubmit=e=>{e.preventDefault();if(answered){next();return}checkNum()};
@@ -900,7 +907,7 @@ function numResult(ok,extra){
   const R=cur.R,rc=document.getElementById("rc");answered=true;
   if(ok){sfx("ok");score++;streak++;best=Math.max(best,streak);rc.classList.add("ok");bump("sc",score);bump("st","×"+streak,streak>=3)}
   else{sfx("bad");streak=0;wrong.push([R.k,`${numFmt(cur.n)}${cur.yen?"円":""}`]);rc.classList.add("bad");const st=document.getElementById("st");st.classList.remove("hot");st.querySelector("b").textContent="×0"}
-  document.getElementById("rt").innerHTML=`<b class="kf">${R.k}</b><span>${R.r} · ${numFmt(cur.n)}${cur.yen?" 円":""}</span>${extra||""}${numNotes(cur.n,cur.yen).map(x=>`<div class="rn">${x}</div>`).join("")}`;
+  document.getElementById("rt").innerHTML=`<b class="kf">${R.h}</b><span>${R.rs} · ${numFmt(cur.n)}${cur.yen?" 円":""}</span>${extra||""}${numNotes(cur.n,cur.yen).map(x=>`<div class="rn">${x}</div>`).join("")}`;
 }
 function pickNum(btn){
   if(answered)return;const ok=btn.dataset.r===cur.R.k;
