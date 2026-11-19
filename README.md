@@ -10,6 +10,7 @@ Darmowy quiz do nauki japońskich sylabariuszy: hiragany i katakany. Działa w p
 
 - **Hiragana, katakana albo obie naraz.** Każde pismo ma 46 podstawowych znaków, 23 znaki z dakuten i handakuten oraz 33 kombinacje yōon (きゃ, しゅ, ちょ…).
 - **Tryb losowy** albo **trening po kolei**, rząd po rzędzie jak w tablicy.
+- **Wybieranie z 4 odpowiedzi** albo **wpisywanie romaji** (np. widzisz サ i wpisujesz „sa”).
 - **4 odpowiedzi do wyboru.** Dobra odpowiedź podświetla się na zielono, zła na czerwono, a apka pokazuje poprawną.
 - **Wynik i seria.** Po rundzie widać wynik, najdłuższą serię i listę znaków do powtórki.
 - **Liczby i ceny**: 4 poziomy (1–10, 11–100, do 10 000, ceny w jenach). Pytania w obie strony: wybierasz czytanie liczby albo wpisujesz liczbę z zapisu w kanie, z wyjaśnieniem nieregularnych form (さんびゃく, はっせん, よえん…).
