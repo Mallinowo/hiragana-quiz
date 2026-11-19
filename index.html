@@ -313,7 +313,8 @@ body.atend .hint{display:none}
 .wchip:active{transform:scale(.96)}
 .wchip.used{opacity:.35}
 .wchip.wclr{background:transparent;color:var(--mute);box-shadow:none;border-style:dashed}
-.ai{font-size:clamp(14px,4.6vw,20px)}
+.ai{font-size:clamp(14px,4.6vw,20px);white-space:nowrap;overflow:hidden}
+.ai.s3{font-size:14px;letter-spacing:-.04em}
 .cc{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:456px;margin:0 auto;background:var(--surf2);border:1px solid var(--line);border-radius:18px;padding:16px;z-index:30;box-shadow:0 12px 40px -12px rgba(60,40,20,.35);animation:up .35s var(--ease) both}
 .cc p{margin:0 0 12px;font-size:13.5px;line-height:1.45;color:var(--mute)}
 .cc div{display:flex;gap:8px}
@@ -1260,7 +1261,7 @@ function actList(){return[["chars",kv("あ"),T("act1"),T("act1d"),T("cnt")(poolN
 function refreshIntro(){
   const bl=document.getElementById("bigL");if(bl){bl.classList.add("still");bl.innerHTML=[...bigLabel()].map(c=>`<span>${c}</span>`).join("")}
   const h=document.getElementById("menuH");if(h)h.innerHTML=T("h2")(script);
-  actList().forEach(a=>{const b=app.querySelector(`[data-a="${a[0]}"]`);if(!b)return;b.querySelector(".ai").textContent=a[1];b.querySelector(".an").textContent=a[4]});
+  actList().forEach(a=>{const b=app.querySelector(`[data-a="${a[0]}"]`);if(!b)return;const ai=b.querySelector(".ai");ai.textContent=a[1];ai.classList.toggle("s3",[...a[1]].length>2);b.querySelector(".an").textContent=a[4]});
 }
 function refreshSetup(){
   const ks={base:"あいう",dak:"がざだ",yoon:"きゃしゅ",all:"あがきゃ"};
@@ -1275,7 +1276,7 @@ function intro(){
   <h2 id="menuH">${T("h2")(script)}</h2>
   ${scriptSeg()}
   <div class="lbl">${T("pickT")}</div>
-  <div class="acts">${acts.map(a=>`<button class="act" data-a="${a[0]}"><span class="ai kf">${a[1]}</span><span class="at"><b>${a[2]}</b><small>${a[3]}</small></span><span class="an">${a[4]}</span></button>`).join("")}</div></div>
+  <div class="acts">${acts.map(a=>`<button class="act" data-a="${a[0]}"><span class="ai kf${[...a[1]].length>2?" s3":""}">${a[1]}</span><span class="at"><b>${a[2]}</b><small>${a[3]}</small></span><span class="an">${a[4]}</span></button>`).join("")}</div></div>
   <div class="foot2"><button class="inst" id="inst"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>${T("install")}</button><button class="link" data-t="1">${T("chartLink")}</button></div>`;
   app.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>setLang(b.dataset.l));
   document.getElementById("inst").onclick=install;updInst();
